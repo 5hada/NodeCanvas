@@ -1,5 +1,7 @@
 @import "tailwindcss";
-@import "@heroui/styles"; 
+@import "../../node_modules/@heroui/styles/dist/heroui.min.css";
+
+@custom-variant dark (&:is(.dark *, [data-theme="dark"] *));
 
 :root,
 .light,
@@ -83,4 +85,11 @@
   --surface-tertiary-foreground: oklch(99.11% 0.0031 283.74);
   --warning: oklch(82.03% 0.1397 79.93);
   --warning-foreground: oklch(21.03% 0.0059 79.93);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
 }

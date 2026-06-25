@@ -136,6 +136,10 @@ export type NodeCanvasProps<
     >
     mode: 'allow' | 'warn' | 'block'
   }) => void
+  showBackground?: boolean
+  showControls?: boolean
+  showMiniMap?: boolean
+  showStatusPanel?: boolean
   nodeTypes?: NodeTypes
   edgeTypes?: EdgeTypes
 }

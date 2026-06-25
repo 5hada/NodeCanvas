@@ -138,3 +138,7 @@ dist
 
 # etc
 .vscode
+.agents
+
+# heroui-agents-md
+.heroui-docs/

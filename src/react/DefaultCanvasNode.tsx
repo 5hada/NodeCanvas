@@ -1,81 +1,63 @@
-import { Handle, Position, type NodeProps } from '@xyflow/react'
+import { Handle, Position, type NodeProps } from "@xyflow/react";
 
-import type { CanvasReactNode } from './types'
+import type { CanvasReactNode } from "./types";
+
+const nodeClassNames = [
+  "node-canvas-node",
+  "flex min-h-16 min-w-30 flex-col gap-3 overflow-hidden border-0 p-4 text-xs",
+  "rounded-[min(32px,var(--radius-3xl))] bg-[var(--surface)] text-[var(--surface-foreground)]",
+  "shadow-[var(--surface-shadow)]",
+  "transition-[border-color,box-shadow,transform] duration-150 ease-[var(--ease-out,ease)]",
+  "data-[selected=true]:shadow-[0_0_0_2px_color-mix(in_oklab,var(--accent)_18%,transparent),var(--overlay-shadow)]",
+].join(" ");
+const nodeHeaderClassNames =
+  "text-center font-semibold leading-6 text-[var(--foreground)]";
+const portsClassNames = "grid grid-cols-2 gap-3";
+const portColumnClassNames = "grid gap-1.5";
+const outputPortColumnClassNames = `${portColumnClassNames} text-right`;
+const inputPortClassNames = "relative min-h-4 pl-1 text-[var(--muted)]";
+const outputPortClassNames = "relative min-h-4 pr-1 text-[var(--muted)]";
+const handleClassNames = [
+  "node-canvas-handle",
+  "!size-2 !border !border-[var(--surface)] !bg-[var(--accent)]",
+  "!shadow-[0_0_0_2px_color-mix(in_oklab,var(--accent)_16%,transparent)]",
+  "hover:!bg-[var(--accent-hover)]",
+].join(" ");
 
 export function DefaultCanvasNode({
   data,
   selected,
 }: NodeProps<CanvasReactNode>): React.JSX.Element {
-  const inputPorts = data.ports.filter((port) => port.direction === 'input')
-  const outputPorts = data.ports.filter((port) => port.direction === 'output')
+  const inputPorts = data.ports.filter((port) => port.direction === "input");
+  const outputPorts = data.ports.filter((port) => port.direction === "output");
 
   return (
-    <div
-      style={{
-        minWidth: 120,
-        minHeight: 64,
-        border: selected ? '2px solid #2563eb' : '1px solid #cbd5e1',
-        borderRadius: 8,
-        background: '#ffffff',
-        color: '#0f172a',
-        boxShadow: selected
-          ? '0 8px 24px rgba(37, 99, 235, 0.18)'
-          : '0 4px 14px rgba(15, 23, 42, 0.1)',
-        fontFamily:
-          'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-        fontSize: 12,
-        overflow: 'hidden',
-      }}
-    >
-      <div
-        style={{
-          borderBottom: '1px solid #e2e8f0',
-          fontWeight: 600,
-          padding: '8px 10px',
-          textAlign: 'center',
-        }}
-      >
-        {data.label}
-      </div>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: 8,
-          padding: 10,
-        }}
-      >
-        <div style={{ display: 'grid', gap: 6 }}>
+    <div className={nodeClassNames} data-selected={selected ? "true" : "false"}>
+      <div className={nodeHeaderClassNames}>{data.label}</div>
+      <div className={portsClassNames}>
+        <div className={portColumnClassNames}>
           {inputPorts.map((port, index) => (
-            <div key={port.id} style={{ position: 'relative', paddingLeft: 4 }}>
+            <div className={inputPortClassNames} key={port.id}>
               <Handle
+                className={handleClassNames}
                 id={port.id}
                 type="target"
                 position={Position.Left}
-                style={{
-                  top: 40 + index * 22,
-                  width: 8,
-                  height: 8,
-                  background: '#64748b',
-                }}
+                style={{ top: 40 + index * 22 }}
               />
               <span>{port.label ?? port.id}</span>
             </div>
           ))}
         </div>
-        <div style={{ display: 'grid', gap: 6, textAlign: 'right' }}>
+        <div className={outputPortColumnClassNames}>
           {outputPorts.map((port, index) => (
-            <div key={port.id} style={{ position: 'relative', paddingRight: 4 }}>
+            <div className={outputPortClassNames} key={port.id}>
               <Handle
+                className={handleClassNames}
                 id={port.id}
                 type="source"
                 position={Position.Right}
-                style={{
-                  top: 40 + index * 22,
-                  width: 8,
-                  height: 8,
-                  background: '#64748b',
-                }}
+                style={{ top: 40 + index * 22 }}
               />
               <span>{port.label ?? port.id}</span>
             </div>
@@ -83,5 +65,5 @@ export function DefaultCanvasNode({
         </div>
       </div>
     </div>
-  )
+  );
 }
