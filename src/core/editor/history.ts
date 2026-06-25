@@ -39,7 +39,7 @@ export function undoHistory<TSnapshot>(
     return history
   }
 
-  const present = history.past[history.past.length - 1]
+  const present = history.past[history.past.length - 1] as TSnapshot
   return {
     ...history,
     past: history.past.slice(0, -1),
@@ -55,7 +55,8 @@ export function redoHistory<TSnapshot>(
     return history
   }
 
-  const [present, ...future] = history.future
+  const present = history.future[0] as TSnapshot
+  const future = history.future.slice(1)
   return {
     ...history,
     past: [...history.past, history.present],

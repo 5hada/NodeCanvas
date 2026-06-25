@@ -1,4 +1,12 @@
 {
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
   "dependencies": {
     "@heroui/react": "^3.2.1",
     "@heroui/styles": "^3.2.1",
