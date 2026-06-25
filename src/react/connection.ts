@@ -1,4 +1,4 @@
-import type { Connection } from '@xyflow/react'
+import type { Connection } from "@xyflow/react";
 
 import type {
   CanvasDocument,
@@ -6,7 +6,7 @@ import type {
   ConnectionContext,
   ConnectionValidationResult,
   NodeCanvasAdapter,
-} from '../core'
+} from "../../packages/graph/src";
 
 export function createConnectionContext<
   TNodeData,
@@ -44,20 +44,24 @@ export function createConnectionContext<
     !connection.target ||
     !connection.targetHandle
   ) {
-    return undefined
+    return undefined;
   }
 
   const fromNode = document.graph.nodes.find(
     (node) => node.id === connection.source,
-  )
-  const toNode = document.graph.nodes.find((node) => node.id === connection.target)
+  );
+  const toNode = document.graph.nodes.find(
+    (node) => node.id === connection.target,
+  );
   const fromPort = fromNode?.ports.find(
     (port) => port.id === connection.sourceHandle,
-  )
-  const toPort = toNode?.ports.find((port) => port.id === connection.targetHandle)
+  );
+  const toPort = toNode?.ports.find(
+    (port) => port.id === connection.targetHandle,
+  );
 
   if (!fromNode || !toNode || !fromPort || !toPort) {
-    return undefined
+    return undefined;
   }
 
   return {
@@ -67,7 +71,7 @@ export function createConnectionContext<
     fromPort,
     toNode,
     toPort,
-  }
+  };
 }
 
 export function createGraphBackedDocument<
@@ -105,11 +109,11 @@ export function createGraphBackedDocument<
       TAnnotationData,
       TGraphData,
       undefined
-    >['id'],
+    >["id"],
     name: String(graph.id),
     graph,
     data: undefined,
-  }
+  };
 }
 
 export function validateReactFlowConnection<
@@ -142,26 +146,26 @@ export function validateReactFlowConnection<
   const context = createConnectionContext(
     createGraphBackedDocument(graph),
     connection,
-  )
+  );
 
   if (!context) {
     return {
-      mode: 'block',
+      mode: "block",
       issues: [
         {
-          id: 'invalid-connection-ref',
-          severity: 'error',
-          code: 'invalid-connection-ref',
-          message: 'Connection references a missing node or port.',
+          id: "invalid-connection-ref",
+          severity: "error",
+          code: "invalid-connection-ref",
+          message: "Connection references a missing node or port.",
         },
       ],
-    }
+    };
   }
 
   return (
     adapter?.validateConnection?.(context) ?? {
-      mode: 'allow',
+      mode: "allow",
       issues: [],
     }
-  )
+  );
 }

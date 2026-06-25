@@ -1,4 +1,4 @@
-import type { EdgeChange, NodeChange } from '@xyflow/react'
+import type { EdgeChange, NodeChange } from "@xyflow/react";
 
 import {
   addEdge,
@@ -11,12 +11,12 @@ import {
   type CanvasGraph,
   type CanvasNodeId,
   type CanvasPortId,
-} from '../core'
+} from "../../packages/graph/src";
 import type {
   CanvasReactEdge,
   CanvasReactNode,
   CreateEdgeContext,
-} from './types'
+} from "./types";
 
 export function toReactFlowNodes<
   TNodeData,
@@ -37,7 +37,7 @@ export function toReactFlowNodes<
 ): CanvasReactNode<TNodeData, TPortData>[] {
   return graph.nodes.map((node) => ({
     id: node.id,
-    type: 'nodeCanvasDefault',
+    type: "nodeCanvasDefault",
     position: node.position,
     width: node.size.width,
     height: node.size.height,
@@ -48,7 +48,7 @@ export function toReactFlowNodes<
       ports: node.ports,
       label: node.label ?? node.type,
     },
-  }))
+  }));
 }
 
 export function toReactFlowEdges<
@@ -79,7 +79,7 @@ export function toReactFlowEdges<
     data: {
       canvasEdge: edge,
     },
-  }))
+  }));
 }
 
 export function applyReactFlowNodeChanges<TGraph extends CanvasGraph>(
@@ -88,33 +88,29 @@ export function applyReactFlowNodeChanges<TGraph extends CanvasGraph>(
 ): TGraph {
   return changes.reduce((nextGraph, change) => {
     switch (change.type) {
-      case 'position':
+      case "position":
         if (!change.position) {
-          return nextGraph
+          return nextGraph;
         }
         return moveNode(
           nextGraph,
           change.id as CanvasNodeId,
           change.position,
-        ) as TGraph
-      case 'dimensions':
+        ) as TGraph;
+      case "dimensions":
         if (!change.dimensions) {
-          return nextGraph
+          return nextGraph;
         }
-        return resizeNode(
-          nextGraph,
-          change.id as CanvasNodeId,
-          {
-            width: change.dimensions.width,
-            height: change.dimensions.height,
-          },
-        ) as TGraph
-      case 'remove':
-        return removeNode(nextGraph, change.id as CanvasNodeId) as TGraph
+        return resizeNode(nextGraph, change.id as CanvasNodeId, {
+          width: change.dimensions.width,
+          height: change.dimensions.height,
+        }) as TGraph;
+      case "remove":
+        return removeNode(nextGraph, change.id as CanvasNodeId) as TGraph;
       default:
-        return nextGraph
+        return nextGraph;
     }
-  }, graph)
+  }, graph);
 }
 
 export function applyReactFlowEdgeChanges<TGraph extends CanvasGraph>(
@@ -123,12 +119,12 @@ export function applyReactFlowEdgeChanges<TGraph extends CanvasGraph>(
 ): TGraph {
   return changes.reduce((nextGraph, change) => {
     switch (change.type) {
-      case 'remove':
-        return removeEdge(nextGraph, change.id as CanvasEdgeId) as TGraph
+      case "remove":
+        return removeEdge(nextGraph, change.id as CanvasEdgeId) as TGraph;
       default:
-        return nextGraph
+        return nextGraph;
     }
-  }, graph)
+  }, graph);
 }
 
 export function connectReactFlowEdge<
@@ -176,7 +172,7 @@ export function connectReactFlowEdge<
       portId: context.targetPortId as CanvasPortId,
     },
     data: edgeData,
-  }
+  };
 
-  return addEdge(graph, edge)
+  return addEdge(graph, edge);
 }

@@ -1,11 +1,10 @@
-import type { Point } from '../primitives'
-import type { ViewportState } from './types'
+import type { Point, ViewportState } from "../types";
 
 export type ZoomOptions = {
-  minZoom?: number
-  maxZoom?: number
-  center?: Point
-}
+  minZoom?: number;
+  maxZoom?: number;
+  center?: Point;
+};
 
 export function createViewport(
   partial: Partial<ViewportState> = {},
@@ -14,7 +13,7 @@ export function createViewport(
     x: partial.x ?? 0,
     y: partial.y ?? 0,
     zoom: partial.zoom ?? 1,
-  }
+  };
 }
 
 export function panViewport(
@@ -25,7 +24,7 @@ export function panViewport(
     ...viewport,
     x: viewport.x + delta.x,
     y: viewport.y + delta.y,
-  }
+  };
 }
 
 export function setViewportCenter(
@@ -36,7 +35,7 @@ export function setViewportCenter(
     ...viewport,
     x: center.x,
     y: center.y,
-  }
+  };
 }
 
 export function zoomViewport(
@@ -48,21 +47,21 @@ export function zoomViewport(
     zoom,
     options.minZoom ?? Number.MIN_VALUE,
     options.maxZoom ?? Number.MAX_VALUE,
-  )
+  );
 
   if (!options.center) {
     return {
       ...viewport,
       zoom: nextZoom,
-    }
+    };
   }
 
-  const scale = nextZoom / viewport.zoom
+  const scale = nextZoom / viewport.zoom;
   return {
     x: options.center.x - (options.center.x - viewport.x) * scale,
     y: options.center.y - (options.center.y - viewport.y) * scale,
     zoom: nextZoom,
-  }
+  };
 }
 
 export function screenToCanvasPoint(
@@ -72,7 +71,7 @@ export function screenToCanvasPoint(
   return {
     x: (point.x - viewport.x) / viewport.zoom,
     y: (point.y - viewport.y) / viewport.zoom,
-  }
+  };
 }
 
 export function canvasToScreenPoint(
@@ -82,9 +81,9 @@ export function canvasToScreenPoint(
   return {
     x: point.x * viewport.zoom + viewport.x,
     y: point.y * viewport.zoom + viewport.y,
-  }
+  };
 }
 
 function clamp(value: number, min: number, max: number): number {
-  return Math.min(Math.max(value, min), max)
+  return Math.min(Math.max(value, min), max);
 }

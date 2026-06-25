@@ -12,7 +12,11 @@ import {
 } from "@heroui/react";
 import { Gear, Moon, Plus, Sun } from "@gravity-ui/icons";
 
-import { addNode, isSelected, type CanvasEdgeId } from "../core";
+import {
+  addNode,
+  isSelected,
+  type CanvasEdgeId,
+} from "../../packages/graph/src";
 import { NodeCanvas } from "../react";
 import type { AppGraph, AppNodeKind } from "./domain";
 import { composeExtensionAdapters } from "./extensions/types";
@@ -86,14 +90,6 @@ export function App(): React.JSX.Element {
           <Button
             fullWidth
             variant="secondary"
-            onClick={() => addNodeByKind("text-source")}
-          >
-            <Plus />
-            Text
-          </Button>
-          <Button
-            fullWidth
-            variant="secondary"
             onClick={() => addNodeByKind("processor")}
           >
             <Plus />
@@ -110,7 +106,7 @@ export function App(): React.JSX.Element {
         </div>
         <Separator className="mt-1" />
         <Typography type="body-sm" weight="semibold" className="text-[13px]">
-          Extensions
+          Options
         </Typography>
         <Select
           value={typePolicy}
@@ -118,7 +114,7 @@ export function App(): React.JSX.Element {
           placeholder="Select one"
           onChange={(value) => setTypePolicy(value as TypePolicy)}
         >
-          <Label className="text-xs text-gray-500">Typed ports</Label>
+          <Label className="text-xs text-gray-500">Connection check</Label>
           <Select.Trigger>
             <Select.Value />
             <Select.Indicator />

@@ -1,4 +1,4 @@
-import type { HistoryState } from './types'
+import type { HistoryState } from "../types";
 
 export function createHistory<TSnapshot>(
   present: TSnapshot,
@@ -9,7 +9,7 @@ export function createHistory<TSnapshot>(
     present,
     future: [],
     limit,
-  }
+  };
 }
 
 export function pushHistory<TSnapshot>(
@@ -17,10 +17,10 @@ export function pushHistory<TSnapshot>(
   nextPresent: TSnapshot,
 ): HistoryState<TSnapshot> {
   if (Object.is(history.present, nextPresent)) {
-    return history
+    return history;
   }
 
-  const past = [...history.past, history.present]
+  const past = [...history.past, history.present];
   return {
     ...history,
     past:
@@ -29,46 +29,46 @@ export function pushHistory<TSnapshot>(
         : past,
     present: nextPresent,
     future: [],
-  }
+  };
 }
 
 export function undoHistory<TSnapshot>(
   history: HistoryState<TSnapshot>,
 ): HistoryState<TSnapshot> {
   if (history.past.length === 0) {
-    return history
+    return history;
   }
 
-  const present = history.past[history.past.length - 1] as TSnapshot
+  const present = history.past[history.past.length - 1] as TSnapshot;
   return {
     ...history,
     past: history.past.slice(0, -1),
     present,
     future: [history.present, ...history.future],
-  }
+  };
 }
 
 export function redoHistory<TSnapshot>(
   history: HistoryState<TSnapshot>,
 ): HistoryState<TSnapshot> {
   if (history.future.length === 0) {
-    return history
+    return history;
   }
 
-  const present = history.future[0] as TSnapshot
-  const future = history.future.slice(1)
+  const present = history.future[0] as TSnapshot;
+  const future = history.future.slice(1);
   return {
     ...history,
     past: [...history.past, history.present],
     present,
     future,
-  }
+  };
 }
 
 export function canUndo(history: HistoryState<unknown>): boolean {
-  return history.past.length > 0
+  return history.past.length > 0;
 }
 
 export function canRedo(history: HistoryState<unknown>): boolean {
-  return history.future.length > 0
+  return history.future.length > 0;
 }

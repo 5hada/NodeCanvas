@@ -1,13 +1,13 @@
-import type { CanvasDocument } from '../document'
-import type { CanvasEdge, CanvasGraph, CanvasNode, CanvasPort } from '../graph'
-import type { ValidationIssue } from '../validation'
+import type { CanvasDocument } from "./document";
+import type { CanvasEdge, CanvasGraph, CanvasNode, CanvasPort } from "./graph";
+import type { ValidationIssue } from "./validation";
 
-export type ConnectionValidationMode = 'allow' | 'warn' | 'block'
+export type ConnectionValidationMode = "allow" | "warn" | "block";
 
 export type ConnectionValidationResult = {
-  mode: ConnectionValidationMode
-  issues: ValidationIssue[]
-}
+  mode: ConnectionValidationMode;
+  issues: ValidationIssue[];
+};
 
 export type ConnectionContext<
   TNodeData = unknown,
@@ -26,7 +26,7 @@ export type ConnectionContext<
     TAnnotationData,
     TGraphData,
     TDocumentData
-  >
+  >;
   graph: CanvasGraph<
     TNodeData,
     TPortData,
@@ -34,12 +34,12 @@ export type ConnectionContext<
     TGroupData,
     TAnnotationData,
     TGraphData
-  >
-  fromNode: CanvasNode<TNodeData, TPortData>
-  fromPort: CanvasPort<TPortData>
-  toNode: CanvasNode<TNodeData, TPortData>
-  toPort: CanvasPort<TPortData>
-}
+  >;
+  fromNode: CanvasNode<TNodeData, TPortData>;
+  fromPort: CanvasPort<TPortData>;
+  toNode: CanvasNode<TNodeData, TPortData>;
+  toPort: CanvasPort<TPortData>;
+};
 
 export type NodeCanvasAdapter<
   TNodeData = unknown,
@@ -60,7 +60,7 @@ export type NodeCanvasAdapter<
       TGraphData,
       TDocumentData
     >,
-  ) => ConnectionValidationResult
+  ) => ConnectionValidationResult;
   validateGraph?: (
     graph: CanvasGraph<
       TNodeData,
@@ -70,7 +70,7 @@ export type NodeCanvasAdapter<
       TAnnotationData,
       TGraphData
     >,
-  ) => ValidationIssue[]
-  getNodeLabel?: (node: CanvasNode<TNodeData, TPortData>) => string
-  getEdgeLabel?: (edge: CanvasEdge<TEdgeData>) => string
-}
+  ) => ValidationIssue[];
+  getNodeLabel?: (node: CanvasNode<TNodeData, TPortData>) => string;
+  getEdgeLabel?: (edge: CanvasEdge<TEdgeData>) => string;
+};

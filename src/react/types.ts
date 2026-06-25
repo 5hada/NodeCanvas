@@ -4,7 +4,7 @@ import type {
   Node,
   NodeTypes,
   ReactFlowProps,
-} from '@xyflow/react'
+} from "@xyflow/react";
 
 import type {
   NodeCanvasAdapter,
@@ -12,29 +12,31 @@ import type {
   CanvasGraph,
   CanvasNode,
   CanvasPort,
-} from '../core'
+} from "../../packages/graph/src";
 
 export type CanvasReactNodeData<
   TNodeData = unknown,
   TPortData = unknown,
 > = Record<string, unknown> & {
-  canvasNode: CanvasNode<TNodeData, TPortData>
-  ports: CanvasPort<TPortData>[]
-  label: string
-}
+  canvasNode: CanvasNode<TNodeData, TPortData>;
+  ports: CanvasPort<TPortData>[];
+  label: string;
+};
 
-export type CanvasReactEdgeData<TEdgeData = unknown> = Record<string, unknown> & {
-  canvasEdge: CanvasEdge<TEdgeData>
-}
+export type CanvasReactEdgeData<TEdgeData = unknown> = Record<
+  string,
+  unknown
+> & {
+  canvasEdge: CanvasEdge<TEdgeData>;
+};
 
-export type CanvasReactNode<
-  TNodeData = unknown,
-  TPortData = unknown,
-> = Node<CanvasReactNodeData<TNodeData, TPortData>>
+export type CanvasReactNode<TNodeData = unknown, TPortData = unknown> = Node<
+  CanvasReactNodeData<TNodeData, TPortData>
+>;
 
 export type CanvasReactEdge<TEdgeData = unknown> = Edge<
   CanvasReactEdgeData<TEdgeData>
->
+>;
 
 export type CreateEdgeContext<
   TNodeData = unknown,
@@ -51,12 +53,12 @@ export type CreateEdgeContext<
     TGroupData,
     TAnnotationData,
     TGraphData
-  >
-  sourceNodeId: string
-  sourcePortId: string
-  targetNodeId: string
-  targetPortId: string
-}
+  >;
+  sourceNodeId: string;
+  sourcePortId: string;
+  targetNodeId: string;
+  targetPortId: string;
+};
 
 export type NodeCanvasProps<
   TNodeData = unknown,
@@ -70,13 +72,13 @@ export type NodeCanvasProps<
     CanvasReactNode<TNodeData, TPortData>,
     CanvasReactEdge<TEdgeData>
   >,
-  | 'nodes'
-  | 'edges'
-  | 'onNodesChange'
-  | 'onEdgesChange'
-  | 'onConnect'
-  | 'nodeTypes'
-  | 'edgeTypes'
+  | "nodes"
+  | "edges"
+  | "onNodesChange"
+  | "onEdgesChange"
+  | "onConnect"
+  | "nodeTypes"
+  | "edgeTypes"
 > & {
   graph: CanvasGraph<
     TNodeData,
@@ -85,7 +87,7 @@ export type NodeCanvasProps<
     TGroupData,
     TAnnotationData,
     TGraphData
-  >
+  >;
   onGraphChange: (
     graph: CanvasGraph<
       TNodeData,
@@ -95,7 +97,7 @@ export type NodeCanvasProps<
       TAnnotationData,
       TGraphData
     >,
-  ) => void
+  ) => void;
   createEdgeData?: (
     context: CreateEdgeContext<
       TNodeData,
@@ -105,7 +107,7 @@ export type NodeCanvasProps<
       TAnnotationData,
       TGraphData
     >,
-  ) => TEdgeData
+  ) => TEdgeData;
   createEdgeId?: (
     context: CreateEdgeContext<
       TNodeData,
@@ -115,7 +117,7 @@ export type NodeCanvasProps<
       TAnnotationData,
       TGraphData
     >,
-  ) => string
+  ) => string;
   adapter?: NodeCanvasAdapter<
     TNodeData,
     TPortData,
@@ -124,7 +126,7 @@ export type NodeCanvasProps<
     TAnnotationData,
     TGraphData,
     undefined
-  >
+  >;
   onConnectionValidation?: (result: {
     connection: CreateEdgeContext<
       TNodeData,
@@ -133,13 +135,13 @@ export type NodeCanvasProps<
       TGroupData,
       TAnnotationData,
       TGraphData
-    >
-    mode: 'allow' | 'warn' | 'block'
-  }) => void
-  showBackground?: boolean
-  showControls?: boolean
-  showMiniMap?: boolean
-  showStatusPanel?: boolean
-  nodeTypes?: NodeTypes
-  edgeTypes?: EdgeTypes
-}
+    >;
+    mode: "allow" | "warn" | "block";
+  }) => void;
+  showBackground?: boolean;
+  showControls?: boolean;
+  showMiniMap?: boolean;
+  showStatusPanel?: boolean;
+  nodeTypes?: NodeTypes;
+  edgeTypes?: EdgeTypes;
+};

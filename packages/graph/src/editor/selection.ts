@@ -1,4 +1,4 @@
-import type { SelectableEntity, SelectionState } from './types'
+import type { SelectableEntity, SelectionState } from "../types";
 
 export function createEmptySelection(): SelectionState {
   return {
@@ -6,14 +6,14 @@ export function createEmptySelection(): SelectionState {
     edgeIds: [],
     groupIds: [],
     annotationIds: [],
-  }
+  };
 }
 
 export function selectOnly(
   selection: SelectionState,
   entity: SelectableEntity,
 ): SelectionState {
-  return addToSelection(createEmptySelection(), entity)
+  return addToSelection(createEmptySelection(), entity);
 }
 
 export function addToSelection(
@@ -21,26 +21,26 @@ export function addToSelection(
   entity: SelectableEntity,
 ): SelectionState {
   switch (entity.kind) {
-    case 'node':
+    case "node":
       return {
         ...selection,
         nodeIds: appendUnique(selection.nodeIds, entity.id),
-      }
-    case 'edge':
+      };
+    case "edge":
       return {
         ...selection,
         edgeIds: appendUnique(selection.edgeIds, entity.id),
-      }
-    case 'group':
+      };
+    case "group":
       return {
         ...selection,
         groupIds: appendUnique(selection.groupIds, entity.id),
-      }
-    case 'annotation':
+      };
+    case "annotation":
       return {
         ...selection,
         annotationIds: appendUnique(selection.annotationIds, entity.id),
-      }
+      };
   }
 }
 
@@ -49,26 +49,26 @@ export function removeFromSelection(
   entity: SelectableEntity,
 ): SelectionState {
   switch (entity.kind) {
-    case 'node':
+    case "node":
       return {
         ...selection,
         nodeIds: selection.nodeIds.filter((id) => id !== entity.id),
-      }
-    case 'edge':
+      };
+    case "edge":
       return {
         ...selection,
         edgeIds: selection.edgeIds.filter((id) => id !== entity.id),
-      }
-    case 'group':
+      };
+    case "group":
       return {
         ...selection,
         groupIds: selection.groupIds.filter((id) => id !== entity.id),
-      }
-    case 'annotation':
+      };
+    case "annotation":
       return {
         ...selection,
         annotationIds: selection.annotationIds.filter((id) => id !== entity.id),
-      }
+      };
   }
 }
 
@@ -78,7 +78,7 @@ export function toggleSelection(
 ): SelectionState {
   return isSelected(selection, entity)
     ? removeFromSelection(selection, entity)
-    : addToSelection(selection, entity)
+    : addToSelection(selection, entity);
 }
 
 export function clearSelection(selection: SelectionState): SelectionState {
@@ -88,9 +88,9 @@ export function clearSelection(selection: SelectionState): SelectionState {
     selection.groupIds.length === 0 &&
     selection.annotationIds.length === 0
   ) {
-    return selection
+    return selection;
   }
-  return createEmptySelection()
+  return createEmptySelection();
 }
 
 export function isSelected(
@@ -98,17 +98,17 @@ export function isSelected(
   entity: SelectableEntity,
 ): boolean {
   switch (entity.kind) {
-    case 'node':
-      return selection.nodeIds.includes(entity.id)
-    case 'edge':
-      return selection.edgeIds.includes(entity.id)
-    case 'group':
-      return selection.groupIds.includes(entity.id)
-    case 'annotation':
-      return selection.annotationIds.includes(entity.id)
+    case "node":
+      return selection.nodeIds.includes(entity.id);
+    case "edge":
+      return selection.edgeIds.includes(entity.id);
+    case "group":
+      return selection.groupIds.includes(entity.id);
+    case "annotation":
+      return selection.annotationIds.includes(entity.id);
   }
 }
 
 function appendUnique<TValue>(values: TValue[], value: TValue): TValue[] {
-  return values.includes(value) ? values : [...values, value]
+  return values.includes(value) ? values : [...values, value];
 }

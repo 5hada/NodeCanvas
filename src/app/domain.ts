@@ -1,4 +1,4 @@
-import type { CanvasGraph, CanvasNode } from "../core";
+import type { CanvasGraph, CanvasNode } from "../../packages/graph/src";
 
 export type AppNodeKind =
   | "source"

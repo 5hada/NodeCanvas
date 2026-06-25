@@ -1,4 +1,9 @@
-import type { CanvasGraphId, CanvasNodeId, CanvasPortId, Point } from "../core";
+import type {
+  CanvasGraphId,
+  CanvasNodeId,
+  CanvasPortId,
+  Point,
+} from "../../packages/graph/src";
 import type { AppGraph, AppNode, AppNodeKind } from "./domain";
 
 export const initialGraph: AppGraph = {

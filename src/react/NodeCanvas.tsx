@@ -17,7 +17,7 @@ import {
 } from "@xyflow/react";
 import { useCallback, useMemo } from "react";
 
-import type { CanvasGraph } from "../core";
+import type { CanvasGraph } from "../../packages/graph/src";
 import {
   applyReactFlowEdgeChanges,
   applyReactFlowNodeChanges,
