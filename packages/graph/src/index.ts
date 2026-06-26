@@ -1,3 +1,2 @@
 export * from "./types";
-export * from "./operations";
-export * from "./editor";
+export * from "./features";

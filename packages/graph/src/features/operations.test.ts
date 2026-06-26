@@ -15,7 +15,7 @@ import type {
   CanvasGraphId,
   CanvasNodeId,
   CanvasPortId,
-} from "./types";
+} from "../types";
 
 type NodeData = {
   title: string;

@@ -12,7 +12,7 @@ import type {
   CanvasNodeId,
   Point,
   Size,
-} from "./types";
+} from "../types";
 
 type EditableGraph = CanvasGraph<
   unknown,
