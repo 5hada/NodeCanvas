@@ -33,6 +33,7 @@ export function App(): React.JSX.Element {
   const [lastConnectionMode, setLastConnectionMode] = useState("idle");
   const { resolvedTheme, setTheme, theme } = useTheme();
   const activeTheme = theme === "system" ? resolvedTheme : theme;
+  const isDarkTheme = activeTheme === "dark";
 
   const extensions = useMemo(
     () => [createTypedPortsExtension(typePolicy)],
@@ -67,7 +68,7 @@ export function App(): React.JSX.Element {
 
   return (
     <main
-      className="grid grid-cols-[240px_minmax(0,1fr)] h-full min-h-0"
+      className="grid h-full min-h-0 grid-cols-[240px_minmax(0,1fr)] bg-(--background) text-(--foreground)"
       // className="grid grid-cols-[240px_minmax(0,1fr)] h-full min-h-0
       //           sm:grid-cols-1 xs:grid-rows-[auto_minmax(0,1fr)]"
     >
@@ -160,10 +161,9 @@ export function App(): React.JSX.Element {
               </Button>
               <Switch
                 className="right-0"
-                aria-label="Enable notifications"
-                onChange={() =>
-                  setTheme(activeTheme == "light" ? "dark" : "light")
-                }
+                aria-label="Toggle dark mode"
+                isSelected={isDarkTheme}
+                onChange={() => setTheme(isDarkTheme ? "light" : "dark")}
               >
                 {({ isSelected }) => (
                   <Switch.Content>
