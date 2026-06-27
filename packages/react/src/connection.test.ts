@@ -6,7 +6,7 @@ import type {
   CanvasNodeId,
   CanvasPortId,
   NodeCanvasAdapter,
-} from "../../packages/graph/src";
+} from "@nodecanvas/core";
 import { validateReactFlowConnection } from "./connection";
 
 type PortData = {

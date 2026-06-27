@@ -12,19 +12,12 @@ import {
 } from "@heroui/react";
 import { Gear, Moon, Plus, Sun } from "@gravity-ui/icons";
 
-import {
-  addNode,
-  isSelected,
-  type CanvasEdgeId,
-} from "../../packages/graph/src";
-import { NodeCanvas } from "../react";
+import { addNode, type CanvasEdgeId } from "@nodecanvas/core";
+import { NodeCanvas } from "@nodecanvas/react";
+import type { TypePolicy } from "@nodecanvas/extensions-default";
 import type { AppGraph, AppNodeKind } from "./domain";
-import { composeExtensionAdapters } from "./extensions/types";
-import {
-  createTypedPortsExtension,
-  type TypePolicy,
-} from "./extensions/typedPorts";
-import { createAppNode, initialGraph, labelForKind } from "./graphFactory";
+import { createAppExtensionRegistry } from "./extensions/registry";
+import { initialGraph } from "./graphFactory";
 
 export function App(): React.JSX.Element {
   const [graph, setGraph] = useState<AppGraph>(initialGraph);
@@ -35,13 +28,13 @@ export function App(): React.JSX.Element {
   const activeTheme = theme === "system" ? resolvedTheme : theme;
   const isDarkTheme = activeTheme === "dark";
 
-  const extensions = useMemo(
-    () => [createTypedPortsExtension(typePolicy)],
+  const registry = useMemo(
+    () => createAppExtensionRegistry({ typePolicy }),
     [typePolicy],
   );
   const adapter = useMemo(
-    () => composeExtensionAdapters(extensions),
-    [extensions],
+    () => registry.adapter,
+    [registry],
   );
   const summary = useMemo(
     () => ({
@@ -58,7 +51,7 @@ export function App(): React.JSX.Element {
     setGraph((currentGraph) =>
       addNode(
         currentGraph,
-        createAppNode(`${kind}-${nextSequence}`, labelForKind(kind), kind, {
+        registry.createNode(`${kind}-${nextSequence}`, kind, {
           x: 120 + nextSequence * 36,
           y: 120 + nextSequence * 24,
         }),
@@ -80,30 +73,17 @@ export function App(): React.JSX.Element {
           NodeCanvas
         </Typography>
         <div className="grid gap-4">
-          <Button
-            fullWidth
-            variant="secondary"
-            onClick={() => addNodeByKind("source")}
-          >
-            <Plus />
-            Source
-          </Button>
-          <Button
-            fullWidth
-            variant="secondary"
-            onClick={() => addNodeByKind("processor")}
-          >
-            <Plus />
-            Processor
-          </Button>
-          <Button
-            fullWidth
-            variant="secondary"
-            onClick={() => addNodeByKind("sink")}
-          >
-            <Plus />
-            Sink
-          </Button>
+          {registry.nodes.map((nodeDefinition) => (
+            <Button
+              fullWidth
+              key={nodeDefinition.kind}
+              variant="secondary"
+              onClick={() => addNodeByKind(nodeDefinition.kind)}
+            >
+              <Plus />
+              {nodeDefinition.label}
+            </Button>
+          ))}
         </div>
         <Separator className="mt-1" />
         <Typography type="body-sm" weight="semibold" className="text-[13px]">

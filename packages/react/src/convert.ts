@@ -11,7 +11,7 @@ import {
   type CanvasGraph,
   type CanvasNodeId,
   type CanvasPortId,
-} from "../../packages/graph/src";
+} from "@nodecanvas/core";
 import type {
   CanvasReactEdge,
   CanvasReactNode,

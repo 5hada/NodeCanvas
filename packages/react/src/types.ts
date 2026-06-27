@@ -12,7 +12,7 @@ import type {
   CanvasGraph,
   CanvasNode,
   CanvasPort,
-} from "../../packages/graph/src";
+} from "@nodecanvas/core";
 
 export type CanvasReactNodeData<
   TNodeData = unknown,

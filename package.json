@@ -1,5 +1,10 @@
 {
   "type": "module",
+  "workspaces": [
+    "packages/core",
+    "packages/react",
+    "packages/extensions/default"
+  ],
   "scripts": {
     "build": "vite build",
     "dev": "vite",

@@ -6,7 +6,7 @@ import type {
   ConnectionContext,
   ConnectionValidationResult,
   NodeCanvasAdapter,
-} from "../../packages/graph/src";
+} from "@nodecanvas/core";
 
 export function createConnectionContext<
   TNodeData,

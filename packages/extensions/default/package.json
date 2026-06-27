@@ -1,0 +1,12 @@
+{
+  "name": "@nodecanvas/extensions-default",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "@nodecanvas/core": "0.0.0"
+  }
+}

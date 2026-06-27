@@ -1,24 +1,26 @@
-import type { CanvasGraph, CanvasNode } from "../../packages/graph/src";
+import type {
+  DefaultEdgeData,
+  DefaultGraph,
+  DefaultGroupData,
+  DefaultNode,
+  DefaultNodeData,
+  DefaultNodeKind,
+  DefaultAnnotationData,
+  DefaultPortData,
+} from "@nodecanvas/extensions-default";
 
-export type AppNodeKind =
-  | "source"
-  | "number-source"
-  | "text-source"
-  | "processor"
-  | "sink";
+export type AppNodeKind = DefaultNodeKind;
 
-export type AppNodeData = {
-  kind: AppNodeKind;
-};
+export type AppNodeData = DefaultNodeData;
 
-export type AppPortData = {
-  typeKey: "number" | "text" | "any";
-};
+export type AppPortData = DefaultPortData;
 
-export type AppEdgeData = {
-  createdBy: "user";
-};
+export type AppEdgeData = DefaultEdgeData;
 
-export type AppGraph = CanvasGraph<AppNodeData, AppPortData, AppEdgeData>;
+export type AppGroupData = DefaultGroupData;
 
-export type AppNode = CanvasNode<AppNodeData, AppPortData>;
+export type AppAnnotationData = DefaultAnnotationData;
+
+export type AppGraph = DefaultGraph;
+
+export type AppNode = DefaultNode;

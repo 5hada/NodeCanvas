@@ -1,2 +1,2 @@
-export * from "../packages/graph/src";
-export * from "./react";
+export * from "@nodecanvas/core";
+export * from "@nodecanvas/react";

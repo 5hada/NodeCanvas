@@ -8,7 +8,7 @@ import type {
   CanvasGraphId,
   CanvasNodeId,
   CanvasPortId,
-} from "../../packages/graph/src";
+} from "@nodecanvas/core";
 import {
   applyReactFlowNodeChanges,
   toReactFlowEdges,

@@ -3,7 +3,7 @@ import type {
   CanvasGraph,
   CanvasNode,
   CanvasPort,
-} from "../../../graph/src";
+} from "@nodecanvas/core";
 
 export type DefaultNodeKind =
   | "source"
