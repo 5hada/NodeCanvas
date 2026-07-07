@@ -12,6 +12,7 @@
     "noEmit": true,
     "noUncheckedIndexedAccess": true,
     "paths": {
+      "@/*": ["./src/*"],
       "@nodecanvas/core": ["./packages/core/src"],
       "@nodecanvas/react": ["./packages/react/src"],
       "@nodecanvas/extensions-default": ["./packages/extensions/default/src"]
