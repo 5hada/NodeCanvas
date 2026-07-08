@@ -15,7 +15,7 @@
       "@/*": ["./src/*"],
       "@nodecanvas/core": ["./packages/core/src"],
       "@nodecanvas/react": ["./packages/react/src"],
-      "@nodecanvas/extensions-default": ["./packages/extensions/default/src"]
+      "@nodecanvas/extensions-default": ["packages/modes/general/src"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

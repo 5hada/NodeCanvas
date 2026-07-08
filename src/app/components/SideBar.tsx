@@ -8,7 +8,7 @@ import {
   IconChevronRight,
 } from "@heroui/react";
 import { Plus, Gear, Sun, Moon } from "@gravity-ui/icons";
-import { DefaultGraph, TypePolicy } from "@nodecanvas/extensions-default";
+import { DefaultGraph, TypePolicy } from "../../../packages/modes/general/src";
 import { AppExtensionRegistry } from "../extensions/registry";
 import { AppNodeKind } from "../domain";
 import { addNode } from "@nodecanvas/core";

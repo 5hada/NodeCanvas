@@ -4,7 +4,7 @@ import { ColorMode } from "@xyflow/react";
 
 import { addNode, type CanvasEdgeId } from "@nodecanvas/core";
 import { NodeCanvas } from "@nodecanvas/react";
-import type { TypePolicy } from "@nodecanvas/extensions-default";
+import type { TypePolicy } from "../../packages/modes/general/src";
 import type { AppGraph, AppNodeKind } from "./domain";
 import { createAppExtensionRegistry } from "./extensions/registry";
 import { initialGraph } from "./graphFactory";

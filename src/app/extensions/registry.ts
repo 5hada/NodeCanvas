@@ -1,10 +1,13 @@
-import { composeExtensionAdapters, type NodeCanvasAdapter } from "@nodecanvas/core";
+import {
+  composeExtensionAdapters,
+  type NodeCanvasAdapter,
+} from "@nodecanvas/core";
 import {
   createDefaultExtension,
   type DefaultExtension,
   type DefaultNodeKind,
   type TypePolicy,
-} from "@nodecanvas/extensions-default";
+} from "../../../packages/modes/general/src";
 
 import type {
   AppEdgeData,

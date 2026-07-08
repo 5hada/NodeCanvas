@@ -37,4 +37,6 @@ export type JsonObject = {
   [key: string]: JsonValue;
 };
 
-export type IO = "in" | "out";
+export const IOTypes = ["in", "out"] as const;
+
+export type IO = (typeof IOTypes)[number];

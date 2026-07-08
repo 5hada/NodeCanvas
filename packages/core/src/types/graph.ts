@@ -26,7 +26,9 @@ export type CanvasGraph<
   data: TGraphData;
 };
 
-export type NodeType = "processor" | "source" | "sink";
+export const nodeTypes = ["processor", "source", "sink"] as const;
+
+export type NodeType = (typeof nodeTypes)[number];
 
 export type CanvasNode<TNodeData = unknown, TPortData = unknown> = {
   id: CanvasNodeId;

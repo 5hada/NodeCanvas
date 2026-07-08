@@ -1,0 +1,282 @@
+{
+  "id": "system-flow",
+  "version": "1.0.0",
+  "title": "System Flow",
+  "desc": "Drawing system flow chart",
+
+  "ports": [
+    { "id": "event" },
+    { "id": "data" },
+    { "id": "text" },
+    { "id": "number" },
+    { "id": "boolean" },
+    { "id": "file" },
+    { "id": "database" },
+    { "id": "api" },
+    { "id": "socket" },
+    { "id": "queue" },
+    { "id": "log" }
+  ],
+
+  "nodes": {
+    "source": [
+      {
+        "id": "input",
+        "name": "Input",
+        "ports": {
+          "out": [{ "id": "data", "name": "Data" }]
+        }
+      },
+      {
+        "id": "event",
+        "name": "Event",
+        "ports": {
+          "out": [{ "id": "event", "name": "Event" }]
+        }
+      },
+      {
+        "id": "timer",
+        "name": "Timer",
+        "ports": {
+          "out": [{ "id": "event", "name": "Tick" }]
+        }
+      },
+      {
+        "id": "constant",
+        "name": "Constant",
+        "ports": {
+          "out": [{ "id": "data", "name": "Value" }]
+        }
+      },
+      {
+        "id": "random",
+        "name": "Random",
+        "ports": {
+          "out": [{ "id": "number", "name": "Number" }]
+        }
+      },
+      {
+        "id": "environment",
+        "name": "Environment",
+        "ports": {
+          "out": [{ "id": "text", "name": "Value" }]
+        }
+      },
+      {
+        "id": "file-read",
+        "name": "File Read",
+        "ports": {
+          "in": [{ "id": "file", "name": "File" }],
+          "out": [{ "id": "data", "name": "Data" }]
+        }
+      },
+      {
+        "id": "db-read",
+        "name": "Database Read",
+        "ports": {
+          "in": [{ "id": "database", "name": "Database" }],
+          "out": [{ "id": "data", "name": "Rows" }]
+        }
+      },
+      {
+        "id": "api-request",
+        "name": "API Request",
+        "ports": {
+          "in": [{ "id": "api", "name": "Request" }],
+          "out": [{ "id": "data", "name": "Response" }]
+        }
+      },
+      {
+        "id": "socket-receive",
+        "name": "Socket Receive",
+        "ports": {
+          "in": [{ "id": "socket", "name": "Socket" }],
+          "out": [{ "id": "data", "name": "Message" }]
+        }
+      }
+    ],
+
+    "processor": [
+      {
+        "id": "process",
+        "name": "Process",
+        "ports": {
+          "in": [{ "id": "any", "name": "In" }],
+          "out": [{ "id": "any", "name": "Out" }]
+        }
+      },
+      {
+        "id": "condition",
+        "name": "Condition",
+        "ports": {
+          "in": [{ "id": "data", "name": "Value" }],
+          "out": [
+            { "id": "boolean", "name": "Result" },
+            { "id": "event", "name": "True" },
+            { "id": "event", "name": "False" }
+          ]
+        }
+      },
+      {
+        "id": "switch",
+        "name": "Switch",
+        "ports": {
+          "in": [{ "id": "data", "name": "Value" }],
+          "out": [{ "id": "event", "name": "Default" }]
+        }
+      },
+      {
+        "id": "loop",
+        "name": "Loop",
+        "ports": {
+          "in": [{ "id": "event", "name": "Start" }],
+          "out": [
+            { "id": "event", "name": "Each" },
+            { "id": "event", "name": "Done" }
+          ]
+        }
+      },
+      {
+        "id": "filter",
+        "name": "Filter",
+        "ports": {
+          "in": [{ "id": "data", "name": "Items" }],
+          "out": [{ "id": "data", "name": "Filtered" }]
+        }
+      },
+      {
+        "id": "transform",
+        "name": "Transform",
+        "ports": {
+          "in": [{ "id": "data", "name": "In" }],
+          "out": [{ "id": "data", "name": "Out" }]
+        }
+      },
+      {
+        "id": "calculate",
+        "name": "Calculate",
+        "ports": {
+          "in": [{ "id": "number", "name": "In" }],
+          "out": [{ "id": "number", "name": "Result" }]
+        }
+      },
+      {
+        "id": "validate",
+        "name": "Validate",
+        "ports": {
+          "in": [{ "id": "data", "name": "Value" }],
+          "out": [
+            { "id": "boolean", "name": "Valid" },
+            { "id": "event", "name": "Pass" },
+            { "id": "event", "name": "Fail" }
+          ]
+        }
+      },
+      {
+        "id": "parse",
+        "name": "Parse",
+        "ports": {
+          "in": [{ "id": "text", "name": "Text" }],
+          "out": [{ "id": "data", "name": "Data" }]
+        }
+      },
+      {
+        "id": "merge",
+        "name": "Merge",
+        "ports": {
+          "in": [
+            { "id": "data", "name": "A" },
+            { "id": "data", "name": "B" }
+          ],
+          "out": [{ "id": "data", "name": "Merged" }]
+        }
+      },
+      {
+        "id": "split",
+        "name": "Split",
+        "ports": {
+          "in": [{ "id": "data", "name": "In" }],
+          "out": [
+            { "id": "data", "name": "A" },
+            { "id": "data", "name": "B" }
+          ]
+        }
+      }
+    ],
+
+    "sink": [
+      {
+        "id": "output",
+        "name": "Output",
+        "ports": {
+          "in": [{ "id": "any", "name": "Value" }]
+        }
+      },
+      {
+        "id": "display",
+        "name": "Display",
+        "ports": {
+          "in": [{ "id": "data", "name": "Data" }]
+        }
+      },
+      {
+        "id": "file-write",
+        "name": "File Write",
+        "ports": {
+          "in": [
+            { "id": "file", "name": "File" },
+            { "id": "data", "name": "Data" }
+          ]
+        }
+      },
+      {
+        "id": "db-save",
+        "name": "Database Save",
+        "ports": {
+          "in": [
+            { "id": "database", "name": "Database" },
+            { "id": "data", "name": "Rows" }
+          ]
+        }
+      },
+      {
+        "id": "api-response",
+        "name": "API Response",
+        "ports": {
+          "in": [{ "id": "data", "name": "Response" }]
+        }
+      },
+      {
+        "id": "network-send",
+        "name": "Network Send",
+        "ports": {
+          "in": [{ "id": "data", "name": "Packet" }]
+        }
+      },
+      {
+        "id": "log",
+        "name": "Log",
+        "ports": {
+          "in": [{ "id": "log", "name": "Log" }]
+        }
+      },
+      {
+        "id": "notification",
+        "name": "Notification",
+        "ports": {
+          "in": [{ "id": "text", "name": "Message" }]
+        }
+      },
+      {
+        "id": "queue-publish",
+        "name": "Queue Publish",
+        "ports": {
+          "in": [
+            { "id": "queue", "name": "Queue" },
+            { "id": "data", "name": "Message" }
+          ]
+        }
+      }
+    ]
+  }
+}

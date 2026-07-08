@@ -2,7 +2,7 @@ import type { Point } from "@nodecanvas/core";
 import {
   createDefaultExtension,
   getDefaultNodeLabel,
-} from "@nodecanvas/extensions-default";
+} from "../../packages/modes/general/src";
 import type { AppGraph, AppNode, AppNodeKind } from "./domain";
 
 const defaultExtension = createDefaultExtension();

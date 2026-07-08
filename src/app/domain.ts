@@ -7,7 +7,7 @@ import type {
   DefaultNodeKind,
   DefaultAnnotationData,
   DefaultPortData,
-} from "@nodecanvas/extensions-default";
+} from "../../packages/modes/general/src";
 
 export type AppNodeKind = DefaultNodeKind;
 
