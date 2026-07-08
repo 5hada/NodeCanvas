@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Select, Label, ListBox, Switch } from "@heroui/react";
+import {
+  Select,
+  Label,
+  ListBox,
+  Switch,
+  IconChevronLeft,
+  IconChevronRight,
+} from "@heroui/react";
 import { Plus, Gear, Sun, Moon } from "@gravity-ui/icons";
 import { DefaultGraph, TypePolicy } from "@nodecanvas/extensions-default";
 import { AppExtensionRegistry } from "../extensions/registry";
@@ -8,11 +15,26 @@ import { addNode } from "@nodecanvas/core";
 import { Button, Separator, Card, Flex } from "./templates";
 import { ThemeControl } from "@/lib/types";
 
+export type SideBarState = "Default" | "Closed" | "Mobile" | "Mobile-Closed";
+
+function ClosedSideBar() {
+  return (
+    <Button variant="secondary" size="icon">
+      <IconChevronRight />
+    </Button>
+  );
+}
+
 function Title() {
   return (
-    <div className="flex flex-col w-full items-start gap-1 p-2 mb-1">
-      <span className="text-2xl">NodeCanvas</span>
-      <span className="text-sm">Description</span>
+    <div className="flex flex-row justify-between">
+      <div className="flex flex-col w-full items-start gap-1 p-2 my-1">
+        <span className="text-2xl">NodeCanvas</span>
+        <span className="text-sm">{"Current"} Mode</span>
+      </div>
+      <Button variant="ghost" size="icon" className="">
+        <IconChevronLeft />
+      </Button>
     </div>
   );
 }
@@ -21,7 +43,7 @@ function Footer({ isDarkTheme, setTheme }: ThemeControl) {
   return (
     <div className="w-full">
       <Separator />
-      <div className="flex gap-3 mt-3 pr-1 justify-between">
+      <div className="flex gap-3 mb-1 pr-1 justify-between">
         <Button variant="ghost" size="icon">
           <Gear />
         </Button>
@@ -82,7 +104,7 @@ export function SideBar({
     );
   }
   return (
-    <Card className="relative w-full flex flex-col justify-between p-4 gap-4">
+    <Card className="relative w-full flex flex-col justify-between px-4 py-2 gap-4">
       <Flex>
         <Title />
         <Separator />

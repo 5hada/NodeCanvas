@@ -37,40 +37,42 @@ export function App(): React.JSX.Element {
   );
 
   return (
-    <main className="flex flex-row w-full h-screen bg-background text-foreground">
-      <Flex className="max-w-70 sm:max-w-75 md:max-w-80">
-        <section className="flex size-full">
-          <SideBar
-            theme={themeControl}
-            registry={registry}
-            typePolicy={typePolicy}
-            setGraph={setGraph}
-            setTypePolicy={setTypePolicy}
-          ></SideBar>
-        </section>
-      </Flex>
-      <Flex>
-        <section className="size-full">
-          <NodeCanvas
-            colorMode={colorMode}
-            graph={graph}
-            onGraphChange={setGraph}
-            adapter={adapter}
-            createEdgeData={() => ({ createdBy: "user" as const })}
-            createEdgeId={({
-              sourceNodeId,
-              sourcePortId,
-              targetNodeId,
-              targetPortId,
-            }) =>
-              `${sourceNodeId}:${sourcePortId}->${targetNodeId}:${targetPortId}` as CanvasEdgeId
-            }
-            onConnectionValidation={({ mode }) => setLastConnectionMode(mode)}
-            minZoom={0.25}
-            maxZoom={2}
-          />
-        </section>
-      </Flex>
+    <main className="w-full h-screen">
+      <div className="flex flex-row w-full h-screen bg-background text-foreground">
+        <Flex className="max-w-70 sm:max-w-75 md:max-w-80">
+          <section className="flex size-full">
+            <SideBar
+              theme={themeControl}
+              registry={registry}
+              typePolicy={typePolicy}
+              setGraph={setGraph}
+              setTypePolicy={setTypePolicy}
+            ></SideBar>
+          </section>
+        </Flex>
+        <Flex>
+          <section className="size-full">
+            <NodeCanvas
+              colorMode={colorMode}
+              graph={graph}
+              onGraphChange={setGraph}
+              adapter={adapter}
+              createEdgeData={() => ({ createdBy: "user" as const })}
+              createEdgeId={({
+                sourceNodeId,
+                sourcePortId,
+                targetNodeId,
+                targetPortId,
+              }) =>
+                `${sourceNodeId}:${sourcePortId}->${targetNodeId}:${targetPortId}` as CanvasEdgeId
+              }
+              onConnectionValidation={({ mode }) => setLastConnectionMode(mode)}
+              minZoom={0.25}
+              maxZoom={2}
+            />
+          </section>
+        </Flex>
+      </div>
     </main>
   );
 }

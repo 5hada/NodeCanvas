@@ -18,8 +18,8 @@ export type Point = {
 };
 
 export type Size = {
-  width: number;
-  height: number;
+  w: number;
+  h: number;
 };
 
 export type Rect = Point & Size;
@@ -36,3 +36,5 @@ export type JsonValue =
 export type JsonObject = {
   [key: string]: JsonValue;
 };
+
+export type IO = "in" | "out";

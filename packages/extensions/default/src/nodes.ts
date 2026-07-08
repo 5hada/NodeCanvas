@@ -9,7 +9,7 @@ export type DefaultNodeDefinition = {
   createPorts: () => DefaultNode["ports"];
 };
 
-const defaultNodeSize: Size = { width: 160, height: 104 };
+const defaultNodeSize: Size = { w: 160, h: 104 };
 
 export const defaultNodeDefinitions: DefaultNodeDefinition[] = [
   {

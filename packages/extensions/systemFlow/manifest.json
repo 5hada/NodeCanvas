@@ -1,0 +1,71 @@
+{
+  "id": "system-flow",
+  "version": "1.0.0",
+  "title": "Systen Flow",
+  "desc": "Drawing system flow chart",
+
+  "ports": [
+    { "id": "primary" },
+    { "id": "string" },
+    { "id": "float" },
+    { "id": "int", "allowLinkTo": ["any", "int", "float"] }
+  ],
+
+  "nodes": [
+    {
+      "id": "",
+      "name": "",
+      "type": "processor",
+      "ports": {
+        "in": [
+          { "id": "", "name": "" },
+          { "id": "", "name": "", "allowMulti": "true" },
+          { "id": "", "name": "", "allowMulti": "false" }
+        ],
+        "out": [
+          { "id": "", "name": "" },
+          { "id": "", "name": "" },
+          { "id": "", "name": "", "allowMulti": "false" },
+          { "id": "", "name": "" }
+        ]
+      }
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "source",
+      "ports": {
+        "out": [
+          { "id": "", "name": "" },
+          { "id": "", "name": "" },
+          { "id": "", "name": "", "allowMulti": "false" },
+          { "id": "", "name": "" }
+        ]
+      }
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "sink",
+      "ports": {
+        "in": [
+          { "id": "", "name": "" },
+          { "id": "", "name": "" },
+          { "id": "", "name": "", "allowMulti": "false" }
+        ]
+      }
+    }
+  ],
+
+  "policies": {
+    "node": {
+      "canEdit": "false",
+      "canEditName": "false",
+      "canEditPorts": "false"
+    },
+    "validation": {
+      "level": "alert",
+      "canChangeLevel": "true"
+    }
+  }
+}

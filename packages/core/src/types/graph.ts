@@ -26,9 +26,11 @@ export type CanvasGraph<
   data: TGraphData;
 };
 
+export type NodeType = "processor" | "source" | "sink";
+
 export type CanvasNode<TNodeData = unknown, TPortData = unknown> = {
   id: CanvasNodeId;
-  type: string;
+  type: NodeType;
   position: Point;
   size: Size;
   ports: CanvasPort<TPortData>[];

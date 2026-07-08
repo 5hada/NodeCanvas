@@ -1,0 +1,65 @@
+{
+  "id": "example",
+  "version": "1.0.0",
+  "title": "Title of module",
+  "describtion": "Describe your preset module",
+
+  "ports": [
+    { "id": "primary" },
+    { "id": "string" },
+    { "id": "float" },
+    { "id": "int", "allowLinkTo": "float" }
+  ],
+
+  "nodes": [
+    {
+      "id": "",
+      "name": "",
+      "type": "processor",
+      "inPorts": [
+        { "id": "", "name": "" },
+        { "id": "", "name": "", "isMulti": "true" },
+        { "id": "", "name": "", "isMulti": "false" }
+      ],
+      "outPorts": [
+        { "id": "", "name": "", "isMulti": "true" },
+        { "id": "", "name": "", "isMulti": "true" },
+        { "id": "", "name": "", "isMulti": "false" },
+        { "id": "", "name": "" }
+      ]
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "source",
+      "outPorts": [
+        { "id": "", "name": "", "isMulti": "true" },
+        { "id": "", "name": "", "isMulti": "true" },
+        { "id": "", "name": "", "isMulti": "false" },
+        { "id": "", "name": "" }
+      ]
+    },
+    {
+      "id": "",
+      "name": "",
+      "type": "sink",
+      "inPorts": [
+        { "id": "", "name": "" },
+        { "id": "", "name": "", "isMulti": "true" },
+        { "id": "", "name": "", "isMulti": "false" }
+      ]
+    }
+  ],
+
+  "policies": {
+    "node": {
+      "canEdit": "false",
+      "canEditName": "false",
+      "canEditPorts": "false"
+    },
+    "validation": {
+      "level": "alert",
+      "canChangeLevel": "true"
+    }
+  }
+}
