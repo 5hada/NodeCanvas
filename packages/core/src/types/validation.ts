@@ -6,11 +6,9 @@ import type {
   CanvasPortId,
 } from "./primitives";
 
-export type ValidationLevel = "none" | "info" | "warning" | "error";
-
 export type ValidationIssue = {
   id: string;
-  severity: ValidationLevel;
+  severity: "info" | "warning" | "error";
   code: string;
   message: string;
   target?: ValidationTarget;

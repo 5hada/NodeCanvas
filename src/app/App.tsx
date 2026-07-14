@@ -1,39 +1,38 @@
 import { useMemo, useState } from "react";
 import { useTheme } from "@heroui/react";
 import { ColorMode } from "@xyflow/react";
-
-import { addNode, type CanvasEdgeId } from "@nodecanvas/core";
-import { NodeCanvas } from "@nodecanvas/react";
-import type { TypePolicy } from "../../packages/modes/general/src";
-import type { AppGraph, AppNodeKind } from "./domain";
-import { createAppExtensionRegistry } from "./extensions/registry";
-import { initialGraph } from "./graphFactory";
 import { SideBar } from "./components/SideBar";
 import { Flex } from "./components/templates/Flex";
 import { ThemeControl } from "@/lib/types";
+import { CanvasGraph } from "../../packages/core/src/features/canvas/canvas";
+import { EditorState } from "../../packages/core/src/features/editor/editor";
+import { createGraph, initEditor } from "./operation";
+import { getMode } from "../../packages/core/src/features/mode/mode";
+import { NodeCanvas } from "./components/NodeCanvas";
 
 export function App(): React.JSX.Element {
-  const [graph, setGraph] = useState<AppGraph>(initialGraph);
-  const [typePolicy, setTypePolicy] = useState<TypePolicy>("warn");
-  const [lastConnectionMode, setLastConnectionMode] = useState("idle");
+  const [currentGraph, setGraph] = useState<CanvasGraph>(createGraph);
+  const [currentEditor, setEditor] = useState<EditorState>(initEditor);
+  const currentModeId = currentEditor.mode;
+  const currentMode = useMemo(() => getMode(currentModeId), [currentModeId]);
+  const modePorts = currentMode.ports;
+  const modeNodes = currentMode.nodes;
 
   const { resolvedTheme, setTheme, theme } = useTheme();
   const colorMode: ColorMode = resolvedTheme === "dark" ? "dark" : "light";
   const isDarkTheme = resolvedTheme === "dark";
   const themeControl: ThemeControl = { isDarkTheme, setTheme };
 
-  const registry = useMemo(
-    () => createAppExtensionRegistry({ typePolicy }),
-    [typePolicy],
-  );
-  const adapter = useMemo(() => registry.adapter, [registry]);
   const summary = useMemo(
     () => ({
-      nodes: graph.nodes.length,
-      ports: graph.nodes.reduce((count, node) => count + node.ports.length, 0),
-      edges: graph.edges.length,
+      nodes: currentGraph.nodes.length,
+      ports: currentGraph.nodes.reduce(
+        (count, node) => count + node.data.ports.length,
+        0,
+      ),
+      edges: currentGraph.edges.length,
     }),
-    [graph],
+    [currentGraph],
   );
 
   return (
@@ -43,10 +42,8 @@ export function App(): React.JSX.Element {
           <section className="flex size-full">
             <SideBar
               theme={themeControl}
-              registry={registry}
-              typePolicy={typePolicy}
-              setGraph={setGraph}
-              setTypePolicy={setTypePolicy}
+              nodeDefs={modeNodes}
+              addNodeById={}
             ></SideBar>
           </section>
         </Flex>
@@ -54,19 +51,8 @@ export function App(): React.JSX.Element {
           <section className="size-full">
             <NodeCanvas
               colorMode={colorMode}
-              graph={graph}
+              graph={currentGraph}
               onGraphChange={setGraph}
-              adapter={adapter}
-              createEdgeData={() => ({ createdBy: "user" as const })}
-              createEdgeId={({
-                sourceNodeId,
-                sourcePortId,
-                targetNodeId,
-                targetPortId,
-              }) =>
-                `${sourceNodeId}:${sourcePortId}->${targetNodeId}:${targetPortId}` as CanvasEdgeId
-              }
-              onConnectionValidation={({ mode }) => setLastConnectionMode(mode)}
               minZoom={0.25}
               maxZoom={2}
             />

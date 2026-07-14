@@ -1,25 +1,23 @@
 import type {
-  CanvasAnnotationId,
   CanvasEdgeId,
   CanvasGroupId,
   CanvasNodeId,
   Point,
-} from "./primitives";
+} from "../../shared/types";
 
-export type PersistedEditorState = {
+export type EditorState = {
+  mode: string;
   selection: SelectionState;
   viewport: ViewportState;
   panels?: PanelState[];
   activeTool?: string;
   grid?: GridSettings;
-  data?: unknown;
 };
 
 export type SelectionState = {
   nodeIds: CanvasNodeId[];
   edgeIds: CanvasEdgeId[];
   groupIds: CanvasGroupId[];
-  annotationIds: CanvasAnnotationId[];
 };
 
 export type SelectableEntity =
@@ -34,10 +32,6 @@ export type SelectableEntity =
   | {
       kind: "group";
       id: CanvasGroupId;
-    }
-  | {
-      kind: "annotation";
-      id: CanvasAnnotationId;
     };
 
 export type ViewportState = Point & {
@@ -54,11 +48,4 @@ export type GridSettings = {
   visible: boolean;
   snap: boolean;
   size: number;
-};
-
-export type HistoryState<TSnapshot> = {
-  past: TSnapshot[];
-  present: TSnapshot;
-  future: TSnapshot[];
-  limit?: number;
 };

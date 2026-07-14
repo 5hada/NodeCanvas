@@ -1,19 +1,8 @@
-import { useState } from "react";
-import {
-  Select,
-  Label,
-  ListBox,
-  Switch,
-  IconChevronLeft,
-  IconChevronRight,
-} from "@heroui/react";
+import { Switch, IconChevronLeft, IconChevronRight } from "@heroui/react";
 import { Plus, Gear, Sun, Moon } from "@gravity-ui/icons";
-import { DefaultGraph, TypePolicy } from "../../../packages/modes/general/src";
-import { AppExtensionRegistry } from "../extensions/registry";
-import { AppNodeKind } from "../domain";
-import { addNode } from "@nodecanvas/core";
 import { Button, Separator, Card, Flex } from "./templates";
 import { ThemeControl } from "@/lib/types";
+import { NodeDef } from "../../../packages/core/src/features/mode/types";
 
 export type SideBarState = "Default" | "Closed" | "Mobile" | "Mobile-Closed";
 
@@ -75,78 +64,31 @@ function Footer({ isDarkTheme, setTheme }: ThemeControl) {
 
 export type SideBarProps = {
   theme: ThemeControl;
-  registry: AppExtensionRegistry;
-  typePolicy: TypePolicy;
-  setGraph: React.Dispatch<React.SetStateAction<DefaultGraph>>;
-  setTypePolicy: React.Dispatch<React.SetStateAction<TypePolicy>>;
+  nodeDefs: NodeDef[];
+  addNodeById: (nodeId: string) => void;
 };
 
-export function SideBar({
-  theme,
-  registry,
-  typePolicy,
-  setGraph,
-  setTypePolicy,
-}: SideBarProps) {
-  const [nodeSequence, setNodeSequence] = useState(2);
-
-  function addNodeByKind(kind: AppNodeKind, nodeSequence: number): void {
-    const nextSequence = nodeSequence + 1;
-    setNodeSequence(nextSequence);
-    setGraph((currentGraph) =>
-      addNode(
-        currentGraph,
-        registry.createNode(`${kind}-${nextSequence}`, kind, {
-          x: 120 + nextSequence * 36,
-          y: 120 + nextSequence * 24,
-        }),
-      ),
-    );
-  }
+export function SideBar({ theme, nodeDefs, addNodeById }: SideBarProps) {
   return (
     <Card className="relative w-full flex flex-col justify-between px-4 py-2 gap-4">
       <Flex>
         <Title />
         <Separator />
         <div className="grid gap-4 my-4">
-          {registry.nodes.map((nodeDefinition) => (
+          {nodeDefs.map((nodeDef) => (
             <Button
-              key={nodeDefinition.kind}
+              key={nodeDef.label}
               variant="secondary"
-              onClick={() => addNodeByKind(nodeDefinition.kind, nodeSequence)}
+              onClick={() => addNodeById(nodeDef.id)}
             >
               <Plus />
-              {nodeDefinition.label}
+              {nodeDef.label}
             </Button>
           ))}
         </div>
         <Separator />
         <div className="pt-3 pb-4">
           <span className="text-[13px]">Options</span>
-          <Select
-            value={typePolicy}
-            fullWidth
-            placeholder="Select one"
-            onChange={(value) => setTypePolicy(value as TypePolicy)}
-          >
-            <Label className="text-xs text-gray-500">Connection policy</Label>
-            <Select.Trigger>
-              <Select.Value />
-              <Select.Indicator />
-            </Select.Trigger>
-            <Select.Popover>
-              <ListBox>
-                <ListBox.Item id="warn" textValue="Warn">
-                  Warn
-                  <ListBox.ItemIndicator />
-                </ListBox.Item>
-                <ListBox.Item id="block" textValue="Block">
-                  Block
-                  <ListBox.ItemIndicator />
-                </ListBox.Item>
-              </ListBox>
-            </Select.Popover>
-          </Select>
         </div>
         <Separator />
       </Flex>

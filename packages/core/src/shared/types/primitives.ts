@@ -8,7 +8,6 @@ export type CanvasNodeId = Brand<string, "CanvasNodeId">;
 export type CanvasPortId = Brand<string, "CanvasPortId">;
 export type CanvasEdgeId = Brand<string, "CanvasEdgeId">;
 export type CanvasGroupId = Brand<string, "CanvasGroupId">;
-export type CanvasAnnotationId = Brand<string, "CanvasAnnotationId">;
 
 export type IsoDateTime = string;
 

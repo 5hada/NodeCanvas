@@ -1,5 +1,5 @@
 import { createModeDef } from "./defaults";
-import { ModeDefInput } from "./types";
+import { ModeDef, ModeDefInput } from "./types";
 
 // const generalModePath = "../../../modes/general/manifest.json";
 
@@ -31,10 +31,10 @@ export const modes = new Map(
 
 export const modeIds = ["general", ...modes.keys()];
 
-export function getMode(modeId: string) {
+export function getMode(modeId: string): ModeDef {
   if (!modes.has(modeId)) {
     throw new Error("Unknown mode id");
   } else {
-    return modes.get(modeId);
+    return modes.get(modeId) as ModeDef;
   }
 }

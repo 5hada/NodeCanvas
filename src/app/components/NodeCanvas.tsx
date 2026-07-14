@@ -1,10 +1,8 @@
-import "@xyflow/react/dist/style.css";
-import "./NodeCanvas.css";
-
 import {
   Background,
   BackgroundVariant,
   Controls,
+  EdgeTypes,
   MiniMap,
   Panel,
   ReactFlow,
@@ -16,26 +14,16 @@ import {
   type NodeTypes,
 } from "@xyflow/react";
 import { useCallback, useMemo } from "react";
-
-import type { CanvasGraph } from "@nodecanvas/core";
-import {
-  applyReactFlowEdgeChanges,
-  applyReactFlowNodeChanges,
-  connectReactFlowEdge,
-  toReactFlowEdges,
-  toReactFlowNodes,
-} from "./convert";
-import { validateReactFlowConnection } from "./connection";
-import { DefaultCanvasNode } from "./DefaultCanvasNode";
+import type { CanvasGraph } from "../../../packages/core/src/features/canvas/canvas";
 import type {
-  CanvasReactEdge,
-  CanvasReactNode,
-  NodeCanvasProps,
-} from "./types";
-
-const defaultNodeTypes: NodeTypes = {
-  nodeCanvasDefault: DefaultCanvasNode,
-};
+  CanvasNode,
+  CanvasEdge,
+} from "../../../packages/core/src/features/canvas/canvas";
+import {
+  validateConnection,
+  applyEdgeChanges,
+  applyNodeChanges,
+} from "../operation";
 
 const flowClassNames =
   "node-canvas-flow bg-[var(--background)] text-[var(--foreground)]";
@@ -61,19 +49,31 @@ const miniMapClassNames = [
   "!shadow-[var(--overlay-shadow)]",
 ].join(" ");
 
-export function NodeCanvas<
-  TNodeData = unknown,
-  TPortData = unknown,
-  TEdgeData = unknown,
-  TGroupData = unknown,
-  TAnnotationData = unknown,
-  TGraphData = unknown,
->({
+type NodeCanvasProps = {
+  graph: CanvasGraph;
+  showBackground: boolean;
+  showControls: boolean;
+  showMiniMap: boolean;
+  showStatusPanel: boolean;
+  nodeTypes: NodeTypes;
+  edgeTypes: EdgeTypes;
+  fitView: boolean;
+  className: string;
+  children: React.JSX.Element;
+  onGraphChange: (graph: CanvasGraph) => void;
+  createEdgeData: Promise<() => void>;
+  createEdgeId: Promise<() => void>;
+  onConnectionValidation: (result: {
+    connection: Connection;
+    mode: "";
+  }) => void;
+};
+
+export function NodeCanvas({
   graph,
   onGraphChange,
   createEdgeData,
   createEdgeId,
-  adapter,
   onConnectionValidation,
   showBackground = true,
   showControls = true,
@@ -85,35 +85,21 @@ export function NodeCanvas<
   className,
   children,
   ...reactFlowProps
-}: NodeCanvasProps<
-  TNodeData,
-  TPortData,
-  TEdgeData,
-  TGroupData,
-  TAnnotationData,
-  TGraphData
->): React.JSX.Element {
-  const nodes = useMemo(() => toReactFlowNodes(graph), [graph]);
-  const edges = useMemo(() => toReactFlowEdges(graph), [graph]);
+}: NodeCanvasProps): React.JSX.Element {
+  const nodes = useMemo(() => graph.nodes, [graph]);
+  const edges = useMemo(() => graph.edges, [graph]);
   const flowClassName = [flowClassNames, className].filter(Boolean).join(" ");
-  const mergedNodeTypes = useMemo(
-    () => ({
-      ...defaultNodeTypes,
-      ...nodeTypes,
-    }),
-    [nodeTypes],
-  );
 
   const handleNodesChange = useCallback(
-    (changes: NodeChange<CanvasReactNode<TNodeData, TPortData>>[]) => {
-      onGraphChange(applyReactFlowNodeChanges(graph, changes));
+    (changes: NodeChange<CanvasNode>[]) => {
+      onGraphChange(applyNodeChanges(graph, changes));
     },
     [graph, onGraphChange],
   );
 
   const handleEdgesChange = useCallback(
-    (changes: EdgeChange<CanvasReactEdge<TEdgeData>>[]) => {
-      onGraphChange(applyReactFlowEdgeChanges(graph, changes));
+    (changes: EdgeChange<CanvasEdge>[]) => {
+      onGraphChange(applyEdgeChanges(graph, changes));
     },
     [graph, onGraphChange],
   );
@@ -136,11 +122,7 @@ export function NodeCanvas<
         targetNodeId: connection.target,
         targetPortId: connection.targetHandle,
       };
-      const validation = validateReactFlowConnection(
-        graph,
-        connection,
-        adapter,
-      );
+      const validation = validateConnection(graph, connection);
       onConnectionValidation?.({
         connection: context,
         mode: validation.mode,
@@ -156,7 +138,6 @@ export function NodeCanvas<
       onGraphChange(connectReactFlowEdge(graph, context, edgeId, edgeData));
     },
     [
-      adapter,
       createEdgeData,
       createEdgeId,
       graph,
@@ -165,21 +146,15 @@ export function NodeCanvas<
     ],
   );
 
-  const isValidConnection = useCallback<
-    IsValidConnection<CanvasReactEdge<TEdgeData>>
-  >(
+  const isValidConnection = useCallback<IsValidConnection<CanvasEdge>>(
     (connection) =>
-      validateReactFlowConnection(
-        graph,
-        {
-          source: connection.source,
-          sourceHandle: connection.sourceHandle ?? null,
-          target: connection.target,
-          targetHandle: connection.targetHandle ?? null,
-        },
-        adapter,
-      ).mode !== "block",
-    [adapter, graph],
+      validateConnection(graph, {
+        source: connection.source,
+        sourceHandle: connection.sourceHandle ?? null,
+        target: connection.target,
+        targetHandle: connection.targetHandle ?? null,
+      }).mode !== "block",
+    [graph],
   );
 
   return (
@@ -189,7 +164,7 @@ export function NodeCanvas<
         className={flowClassName}
         nodes={nodes}
         edges={edges}
-        nodeTypes={mergedNodeTypes}
+        nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         fitView={fitView}
         onNodesChange={handleNodesChange}
@@ -238,5 +213,3 @@ export function NodeCanvas<
     </ReactFlowProvider>
   );
 }
-
-export type AnyCanvasGraph = CanvasGraph;

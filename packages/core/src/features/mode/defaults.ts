@@ -8,12 +8,12 @@ const defaultPortPolicies: T.PortPolicies = {
 };
 
 const defaultNodePolicies: T.NodePolicies = {
-  canEditName: true,
+  canEditlabel: true,
   canEditPorts: true,
 };
 
 const defaultValidationPolicies: T.ValidationPolicies = {
-  level: "info",
+  mode: "warn",
   canChangeLevel: true,
 };
 
@@ -38,28 +38,28 @@ const defaultNodes: Record<NodeType, T.NodeDef[]> = {
   processor: [
     {
       id: "process",
-      name: "Process",
+      label: "Process",
       ports: {
-        in: [{ id: "any", name: "Any", allowMulti: true }],
-        out: [{ id: "any", name: "Any", allowMulti: true }],
+        in: [{ id: "any", label: "Any", allowMulti: true }],
+        out: [{ id: "any", label: "Any", allowMulti: true }],
       },
     },
   ],
   source: [
     {
       id: "source",
-      name: "Source",
+      label: "Source",
       ports: {
-        out: [{ id: "any", name: "any", allowMulti: true }],
+        out: [{ id: "any", label: "any", allowMulti: true }],
       },
     },
   ],
   sink: [
     {
       id: "sink",
-      name: "Sink",
+      label: "Sink",
       ports: {
-        in: [{ id: "any", name: "any", allowMulti: true }],
+        in: [{ id: "any", label: "any", allowMulti: true }],
       },
     },
   ],
@@ -90,7 +90,7 @@ export function createModeDef(mode: T.ModeDefInput): T.ModeDef {
             nodeType,
             mode.nodes?.[nodeType]?.map((node) => ({
               id: node.id,
-              name: node.name,
+              label: node.label,
               ports: Object.fromEntries(
                 IOTypes.map((io) => [
                   io,

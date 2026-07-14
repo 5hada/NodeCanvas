@@ -1,4 +1,9 @@
-import type { HistoryState } from "../types";
+export type HistoryState<TSnapshot> = {
+  past: TSnapshot[];
+  present: TSnapshot;
+  future: TSnapshot[];
+  limit?: number;
+};
 
 export function createHistory<TSnapshot>(
   present: TSnapshot,

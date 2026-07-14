@@ -47,7 +47,7 @@
       "canEditPorts": true
     },
     "validation": {
-      "level": "alert",
+      "mode": "warn",
       "canChangeLevel": true
     }
   }

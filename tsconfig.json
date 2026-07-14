@@ -14,8 +14,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@nodecanvas/core": ["./packages/core/src"],
-      "@nodecanvas/react": ["./packages/react/src"],
-      "@nodecanvas/extensions-default": ["packages/modes/general/src"]
+      "@nodecanvas/react": ["./packages/react/src"]
     },
     "resolveJsonModule": true,
     "skipLibCheck": true,

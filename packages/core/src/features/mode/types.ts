@@ -1,6 +1,5 @@
-import { ValidationLevel } from "../../types/validation";
-import { NodeType } from "../../types/graph";
-import { IO } from "../../types/primitives";
+import { ConnectionValidationMode } from "../../types/validation";
+import { IO, NodeType } from "../../shared/types";
 
 export type PortPolicies = {
   canAdd: boolean;
@@ -8,12 +7,12 @@ export type PortPolicies = {
 };
 
 export type NodePolicies = {
-  canEditName: boolean;
+  canEditlabel: boolean;
   canEditPorts: boolean;
 };
 
 export type ValidationPolicies = {
-  level: ValidationLevel;
+  mode: ConnectionValidationMode;
   canChangeLevel: boolean;
 };
 
@@ -35,25 +34,25 @@ export type PortDefInput = {
 
 export type PortData = {
   id: string;
-  name: string;
+  label: string;
   allowMulti: boolean;
 };
 
 export type PortDataInput = {
   id: string;
-  name: string;
+  label: string;
   allowMulti?: boolean;
 };
 
 export type NodeDef = {
   id: string;
-  name: string;
+  label: string;
   ports: Partial<Record<IO, PortData[]>>;
 };
 
 export type NodeDefInput = {
   id: string;
-  name: string;
+  label: string;
   ports: Partial<Record<IO, PortDataInput[]>>;
 };
 
@@ -73,6 +72,6 @@ export type ModeDefInput = {
   title: string;
   desc?: string;
   ports?: PortDef[];
-  nodes?: Partial<Record<NodeType, NodeDefInput[]>>;
+  nodes?: Partial<Record<NodeType, NodeDef[]>>;
   policies?: Policies;
 };
