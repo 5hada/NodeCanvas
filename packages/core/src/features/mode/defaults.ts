@@ -1,6 +1,5 @@
 import * as T from "./types";
-import { IOTypes } from "../../types/index";
-import { NodeType, nodeTypes } from "../../types/index";
+import { IOTypes, NodeType, nodeTypes } from "../../shared/types";
 
 const defaultPortPolicies: T.PortPolicies = {
   canAdd: true,
@@ -61,6 +60,13 @@ const defaultNodes: Record<NodeType, T.NodeDef[]> = {
       ports: {
         in: [{ id: "any", label: "any", allowMulti: true }],
       },
+    },
+  ],
+  annotation: [
+    {
+      id: "annotation",
+      label: "annotation",
+      ports: {},
     },
   ],
 };
