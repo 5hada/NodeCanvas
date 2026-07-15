@@ -16,6 +16,7 @@ import {
 import { getMode } from "../../packages/core/src/features/mode/mode";
 import { NodeCanvas } from "./components/NodeCanvas";
 import { nodeTypes } from "../../packages/core/src/shared/types";
+import { ProcessorNode, SinkNode, SourceNode } from "./components/Node";
 
 export function App(): React.JSX.Element {
   const [currentGraph, setGraph] = useState<CanvasGraph>(createGraph);
@@ -42,7 +43,14 @@ export function App(): React.JSX.Element {
     [currentGraph],
   );
 
-  const defaultNodeTypes = {};
+  const defaultNodeTypes = useMemo(
+    () => ({
+      processor: ProcessorNode,
+      sink: SinkNode,
+      source: SourceNode,
+    }),
+    [],
+  );
 
   return (
     <main className="w-full h-screen">
