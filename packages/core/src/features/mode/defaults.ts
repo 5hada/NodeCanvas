@@ -12,7 +12,7 @@ const defaultNodePolicies: T.NodePolicies = {
 };
 
 const defaultValidationPolicies: T.ValidationPolicies = {
-  mode: "warn",
+  mode: "info",
   canChangeLevel: true,
 };
 

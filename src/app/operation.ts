@@ -71,7 +71,7 @@ export function validateConnection(graph: CanvasGraph, connection: Connection) {
 
 export function addEdge() {}
 
-export function addNode() {}
+export function addNodeById(nodeId: string) {}
 
 export function applyNodeChanges(
   graph: CanvasGraph,
@@ -94,3 +94,6 @@ export function applyEdgeChanges(
 export function handleNewEdge(graph: CanvasGraph, connection: Connection) {
   const validation = validateConnection(graph, connection);
 }
+
+export function createEdgeData(context: EdgeContext) {}
+export function createEdgeId(context: EdgeContext) {}

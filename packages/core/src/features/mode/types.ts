@@ -1,4 +1,4 @@
-import { ConnectionValidationMode } from "../../types/validation";
+import { ConnectValidationPolicy } from "../editor/editor";
 import { IO, NodeType } from "../../shared/types";
 
 export type PortPolicies = {
@@ -12,7 +12,7 @@ export type NodePolicies = {
 };
 
 export type ValidationPolicies = {
-  mode: ConnectionValidationMode;
+  mode: ConnectValidationPolicy;
   canChangeLevel: boolean;
 };
 
@@ -49,6 +49,8 @@ export type NodeDef = {
   label: string;
   ports: Partial<Record<IO, PortData[]>>;
 };
+
+export type NodeDefs = Partial<Record<NodeType, NodeDef[]>>;
 
 export type NodeDefInput = {
   id: string;

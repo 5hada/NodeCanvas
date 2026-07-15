@@ -1,4 +1,5 @@
-import type { Point, ViewportState } from "../types";
+import type { Point } from "../../shared/types";
+import type { ViewportState } from "./editor";
 
 export type ZoomOptions = {
   minZoom?: number;

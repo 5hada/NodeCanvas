@@ -6,9 +6,16 @@ import { Flex } from "./components/templates/Flex";
 import { ThemeControl } from "@/lib/types";
 import { CanvasGraph } from "../../packages/core/src/features/canvas/canvas";
 import { EditorState } from "../../packages/core/src/features/editor/editor";
-import { createGraph, initEditor } from "./operation";
+import {
+  addNodeById,
+  createEdgeData,
+  createEdgeId,
+  createGraph,
+  initEditor,
+} from "./operation";
 import { getMode } from "../../packages/core/src/features/mode/mode";
 import { NodeCanvas } from "./components/NodeCanvas";
+import { nodeTypes } from "../../packages/core/src/shared/types";
 
 export function App(): React.JSX.Element {
   const [currentGraph, setGraph] = useState<CanvasGraph>(createGraph);
@@ -35,6 +42,8 @@ export function App(): React.JSX.Element {
     [currentGraph],
   );
 
+  const defaultNodeTypes = {};
+
   return (
     <main className="w-full h-screen">
       <div className="flex flex-row w-full h-screen bg-background text-foreground">
@@ -43,18 +52,18 @@ export function App(): React.JSX.Element {
             <SideBar
               theme={themeControl}
               nodeDefs={modeNodes}
-              addNodeById={}
+              addNodeById={addNodeById}
             ></SideBar>
           </section>
         </Flex>
         <Flex>
           <section className="size-full">
             <NodeCanvas
-              colorMode={colorMode}
               graph={currentGraph}
+              nodeTypes={defaultNodeTypes}
               onGraphChange={setGraph}
-              minZoom={0.25}
-              maxZoom={2}
+              createEdgeData={createEdgeData}
+              createEdgeId={createEdgeId}
             />
           </section>
         </Flex>

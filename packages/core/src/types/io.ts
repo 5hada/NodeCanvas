@@ -1,4 +1,4 @@
-import type { CanvasDocument } from "./document";
+import type { CanvasDocument } from "../features/document/document";
 
 export type DocumentExportFormat = string;
 

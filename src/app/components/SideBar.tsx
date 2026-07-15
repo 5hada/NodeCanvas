@@ -2,7 +2,11 @@ import { Switch, IconChevronLeft, IconChevronRight } from "@heroui/react";
 import { Plus, Gear, Sun, Moon } from "@gravity-ui/icons";
 import { Button, Separator, Card, Flex } from "./templates";
 import { ThemeControl } from "@/lib/types";
-import { NodeDef } from "../../../packages/core/src/features/mode/types";
+import {
+  NodeDef,
+  NodeDefs,
+} from "../../../packages/core/src/features/mode/types";
+import { nodeTypes } from "../../../packages/core/src/shared/types";
 
 export type SideBarState = "Default" | "Closed" | "Mobile" | "Mobile-Closed";
 
@@ -64,7 +68,7 @@ function Footer({ isDarkTheme, setTheme }: ThemeControl) {
 
 export type SideBarProps = {
   theme: ThemeControl;
-  nodeDefs: NodeDef[];
+  nodeDefs: NodeDefs;
   addNodeById: (nodeId: string) => void;
 };
 
@@ -75,16 +79,19 @@ export function SideBar({ theme, nodeDefs, addNodeById }: SideBarProps) {
         <Title />
         <Separator />
         <div className="grid gap-4 my-4">
-          {nodeDefs.map((nodeDef) => (
-            <Button
-              key={nodeDef.label}
-              variant="secondary"
-              onClick={() => addNodeById(nodeDef.id)}
-            >
-              <Plus />
-              {nodeDef.label}
-            </Button>
-          ))}
+          {nodeTypes.map((nodeType) =>
+            nodeDefs?.[nodeType]?.map((nodeDef) => (
+              <Button
+                key={nodeDef.label}
+                variant="secondary"
+                onClick={() => addNodeById(nodeDef.id)}
+              >
+                <Plus />
+                {nodeType}
+                {nodeDef.label}
+              </Button>
+            )),
+          )}
         </div>
         <Separator />
         <div className="pt-3 pb-4">

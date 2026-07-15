@@ -51,17 +51,16 @@ const miniMapClassNames = [
   "!shadow-[var(--overlay-shadow)]",
 ].join(" ");
 
-type NodeCanvasProps = {
+export type NodeCanvasProps = {
   graph: CanvasGraph;
-  showBackground: boolean;
-  showControls: boolean;
-  showMiniMap: boolean;
-  showStatusPanel: boolean;
-  nodeTypes: NodeTypes;
-  edgeTypes: EdgeTypes;
-  fitView: boolean;
-  className: string;
-  children: React.JSX.Element;
+  showBackground?: boolean;
+  showControls?: boolean;
+  showMiniMap?: boolean;
+  showStatusPanel?: boolean;
+  nodeTypes?: NodeTypes;
+  edgeTypes?: EdgeTypes;
+  className?: string;
+  children?: React.JSX.Element;
   onGraphChange: (graph: CanvasGraph) => void;
   createEdgeData: (context: EdgeContext) => void;
   createEdgeId: (context: EdgeContext) => void;
@@ -78,7 +77,6 @@ export function NodeCanvas({
   showStatusPanel = true,
   nodeTypes,
   edgeTypes,
-  fitView = true,
   className,
   children,
   ...reactFlowProps
@@ -128,7 +126,6 @@ export function NodeCanvas({
         edges={edges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        fitView={fitView}
         onNodesChange={handleNodesChange}
         onEdgesChange={handleEdgesChange}
         onConnect={handleConnect}
