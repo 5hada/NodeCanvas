@@ -9,13 +9,26 @@ import {
   SelectionState,
   ViewportState,
 } from "../../packages/core/src/features/editor/editor";
-import { CanvasGraphId } from "../../packages/core/src/shared/types";
+import {
+  CanvasEdgeId,
+  CanvasNodeId,
+  CanvasPortId,
+  CanvasGraphId,
+} from "../../packages/core/src/shared/types";
 import {
   Connection,
   ConnectionMode,
   EdgeChange,
   NodeChange,
 } from "@xyflow/react";
+
+export type EdgeContext = {
+  graph: CanvasGraph;
+  sourceNodeId: CanvasNodeId;
+  sourcePortId: CanvasPortId;
+  targetNodeId: CanvasNodeId;
+  targetPortId: CanvasPortId;
+};
 
 export function createGraph(): CanvasGraph {
   return {
@@ -52,7 +65,7 @@ export function initEditor(): EditorState {
 
 export function validateConnection(graph: CanvasGraph, connection: Connection) {
   return {
-    mode: "",
+    result: true,
   };
 }
 
@@ -76,4 +89,8 @@ export function applyEdgeChanges(
   return {
     ...graph,
   };
+}
+
+export function handleNewEdge(graph: CanvasGraph, connection: Connection) {
+  const validation = validateConnection(graph, connection);
 }

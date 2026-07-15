@@ -23,6 +23,8 @@ import {
   validateConnection,
   applyEdgeChanges,
   applyNodeChanges,
+  EdgeContext,
+  handleNewEdge,
 } from "../operation";
 
 const flowClassNames =
@@ -61,12 +63,8 @@ type NodeCanvasProps = {
   className: string;
   children: React.JSX.Element;
   onGraphChange: (graph: CanvasGraph) => void;
-  createEdgeData: Promise<() => void>;
-  createEdgeId: Promise<() => void>;
-  onConnectionValidation: (result: {
-    connection: Connection;
-    mode: "";
-  }) => void;
+  createEdgeData: (context: EdgeContext) => void;
+  createEdgeId: (context: EdgeContext) => void;
 };
 
 export function NodeCanvas({
@@ -74,7 +72,6 @@ export function NodeCanvas({
   onGraphChange,
   createEdgeData,
   createEdgeId,
-  onConnectionValidation,
   showBackground = true,
   showControls = true,
   showMiniMap = true,
@@ -106,44 +103,9 @@ export function NodeCanvas({
 
   const handleConnect = useCallback(
     (connection: Connection) => {
-      if (
-        !connection.source ||
-        !connection.sourceHandle ||
-        !connection.target ||
-        !connection.targetHandle
-      ) {
-        return;
-      }
-
-      const context = {
-        graph,
-        sourceNodeId: connection.source,
-        sourcePortId: connection.sourceHandle,
-        targetNodeId: connection.target,
-        targetPortId: connection.targetHandle,
-      };
-      const validation = validateConnection(graph, connection);
-      onConnectionValidation?.({
-        connection: context,
-        mode: validation.mode,
-      });
-      if (validation.mode === "block") {
-        return;
-      }
-      const edgeId =
-        createEdgeId?.(context) ??
-        `${connection.source}:${connection.sourceHandle}->${connection.target}:${connection.targetHandle}`;
-      const edgeData = createEdgeData?.(context) ?? (undefined as TEdgeData);
-
-      onGraphChange(connectReactFlowEdge(graph, context, edgeId, edgeData));
+      handleNewEdge(graph, connection);
     },
-    [
-      createEdgeData,
-      createEdgeId,
-      graph,
-      onConnectionValidation,
-      onGraphChange,
-    ],
+    [handleNewEdge, graph],
   );
 
   const isValidConnection = useCallback<IsValidConnection<CanvasEdge>>(
@@ -153,7 +115,7 @@ export function NodeCanvas({
         sourceHandle: connection.sourceHandle ?? null,
         target: connection.target,
         targetHandle: connection.targetHandle ?? null,
-      }).mode !== "block",
+      }).result == true,
     [graph],
   );
 

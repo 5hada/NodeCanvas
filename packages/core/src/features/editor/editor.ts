@@ -49,3 +49,5 @@ export type GridSettings = {
   snap: boolean;
   size: number;
 };
+
+export type ConnectValidationPolicy = "none" | "info" | "alert";
