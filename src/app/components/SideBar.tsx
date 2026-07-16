@@ -2,10 +2,7 @@ import { Switch, IconChevronLeft, IconChevronRight } from "@heroui/react";
 import { Plus, Gear, Sun, Moon } from "@gravity-ui/icons";
 import { Button, Separator, Card, Flex } from "./templates";
 import { ThemeControl } from "@/lib/types";
-import {
-  NodeDef,
-  NodeDefs,
-} from "../../../packages/core/src/features/mode/types";
+import type { NodeDefs } from "../../../packages/core/src/features/mode/types";
 import { nodeTypes } from "../../../packages/core/src/shared/types";
 
 export type SideBarState = "Default" | "Closed" | "Mobile" | "Mobile-Closed";
@@ -21,7 +18,7 @@ function ClosedSideBar() {
 function Title() {
   return (
     <div className="flex flex-row justify-between">
-      <div className="flex flex-col w-full items-start gap-1 p-2 my-1">
+      <div className="flex flex-col w-full items-start gap-1 py-2 my-1">
         <span className="text-2xl">NodeCanvas</span>
         <span className="text-sm">{"Current"} Mode</span>
       </div>
@@ -78,20 +75,28 @@ export function SideBar({ theme, nodeDefs, addNodeById }: SideBarProps) {
       <Flex>
         <Title />
         <Separator />
-        <div className="grid gap-4 my-4">
-          {nodeTypes.map((nodeType) =>
-            nodeDefs?.[nodeType]?.map((nodeDef) => (
-              <Button
-                key={nodeDef.label}
-                variant="secondary"
-                onClick={() => addNodeById(nodeDef.id)}
-              >
-                <Plus />
-                {nodeType}
-                {nodeDef.label}
-              </Button>
-            )),
-          )}
+        <div className="flex flex-col gap-2 pb-4">
+          <div>
+            <span className="text-xl">Nodes</span>
+          </div>
+          {nodeTypes.map((nodeType) => (
+            <div className="w-full flex flex-col gap-1">
+              <span>{nodeType}</span>
+              <div key={nodeType}>
+                {nodeDefs?.[nodeType]?.map((nodeDef) => (
+                  <Button
+                    className="w-full"
+                    key={nodeDef.label}
+                    variant="secondary"
+                    onClick={() => addNodeById(nodeDef.id)}
+                  >
+                    <Plus />
+                    {nodeDef.label}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
         <Separator />
         <div className="pt-3 pb-4">
