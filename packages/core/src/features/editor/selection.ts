@@ -1,11 +1,10 @@
-import type { SelectableEntity, SelectionState } from "../types";
+import type { SelectableEntity, SelectionState } from "../editor/editor";
 
 export function createEmptySelection(): SelectionState {
   return {
     nodeIds: [],
     edgeIds: [],
     groupIds: [],
-    annotationIds: [],
   };
 }
 
@@ -36,11 +35,6 @@ export function addToSelection(
         ...selection,
         groupIds: appendUnique(selection.groupIds, entity.id),
       };
-    case "annotation":
-      return {
-        ...selection,
-        annotationIds: appendUnique(selection.annotationIds, entity.id),
-      };
   }
 }
 
@@ -64,11 +58,6 @@ export function removeFromSelection(
         ...selection,
         groupIds: selection.groupIds.filter((id) => id !== entity.id),
       };
-    case "annotation":
-      return {
-        ...selection,
-        annotationIds: selection.annotationIds.filter((id) => id !== entity.id),
-      };
   }
 }
 
@@ -85,8 +74,7 @@ export function clearSelection(selection: SelectionState): SelectionState {
   if (
     selection.nodeIds.length === 0 &&
     selection.edgeIds.length === 0 &&
-    selection.groupIds.length === 0 &&
-    selection.annotationIds.length === 0
+    selection.groupIds.length === 0
   ) {
     return selection;
   }
@@ -104,8 +92,6 @@ export function isSelected(
       return selection.edgeIds.includes(entity.id);
     case "group":
       return selection.groupIds.includes(entity.id);
-    case "annotation":
-      return selection.annotationIds.includes(entity.id);
   }
 }
 
