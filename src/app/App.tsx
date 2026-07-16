@@ -15,7 +15,6 @@ import {
 } from "./operation";
 import { getMode } from "../../packages/core/src/features/mode/mode";
 import { NodeCanvas } from "./components/NodeCanvas";
-import { nodeTypes } from "../../packages/core/src/shared/types";
 import { ProcessorNode, SinkNode, SourceNode } from "./components/Node";
 
 export function App(): React.JSX.Element {
@@ -30,18 +29,6 @@ export function App(): React.JSX.Element {
   const colorMode: ColorMode = resolvedTheme === "dark" ? "dark" : "light";
   const isDarkTheme = resolvedTheme === "dark";
   const themeControl: ThemeControl = { isDarkTheme, setTheme };
-
-  const summary = useMemo(
-    () => ({
-      nodes: currentGraph.nodes.length,
-      ports: currentGraph.nodes.reduce(
-        (count, node) => count + node.data.ports.length,
-        0,
-      ),
-      edges: currentGraph.edges.length,
-    }),
-    [currentGraph],
-  );
 
   const defaultNodeTypes = useMemo(
     () => ({

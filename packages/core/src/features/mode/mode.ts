@@ -1,11 +1,11 @@
 import { createModeDef } from "./defaults";
 import { ModeDef, ModeDefInput } from "./types";
+import modeIndex from "../../../../modes/index.json";
 
-// const generalModePath = "../../../modes/general/manifest.json";
-
-// export const generalMode = await fetch(`${generalModePath}`).then(
-//   (r) => r.json() as unknown as ModeDef,
-// );
+const modeModules = import.meta.glob<ModeDefInput>("../../../../modes/*.json", {
+  eager: true,
+  import: "default",
+});
 
 export const generalMode = createModeDef({
   id: "general",
@@ -13,20 +13,19 @@ export const generalMode = createModeDef({
   title: "General",
 });
 
-const modesJson: string[] = await fetch("../../../modes/index.json").then((r) =>
-  r.json(),
-);
+const indexedModes = modeIndex.map((fileName) => {
+  const path = `../../../../modes/${fileName}`;
+  const mode = modeModules[path];
+
+  if (!mode) {
+    throw new Error(`Mode listed in index.json was not found: ${fileName}`);
+  }
+
+  return mode;
+});
 
 export const modes = new Map(
-  (
-    await Promise.all(
-      modesJson.map((mode) =>
-        fetch(`../../../modes/${mode}`).then(
-          (r) => r.json() as unknown as ModeDefInput,
-        ),
-      ),
-    )
-  ).map((mode) => [mode.id, createModeDef(mode)]),
+  indexedModes.map((mode) => [mode.id, createModeDef(mode)]),
 ).set("general", generalMode);
 
 export const modeIds = ["general", ...modes.keys()];
