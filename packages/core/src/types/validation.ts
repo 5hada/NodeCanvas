@@ -1,10 +1,9 @@
 import type {
-  CanvasAnnotationId,
   CanvasEdgeId,
   CanvasGroupId,
   CanvasNodeId,
   CanvasPortId,
-} from "./primitives";
+} from "../shared/types";
 
 export type ValidationIssue = {
   id: string;
@@ -35,8 +34,4 @@ export type ValidationTarget =
   | {
       kind: "group";
       groupId: CanvasGroupId;
-    }
-  | {
-      kind: "annotation";
-      annotationId: CanvasAnnotationId;
     };

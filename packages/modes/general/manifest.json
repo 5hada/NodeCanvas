@@ -1,0 +1,54 @@
+{
+  "id": "general",
+  "version": "1.0.0",
+  "title": "General",
+  "desc": "General sets",
+
+  "ports": [{ "id": "any" }, { "id": "none", "allowLinkTo": [] }],
+
+  "nodes": {
+    "processor": [
+      {
+        "id": "process",
+        "name": "Process",
+        "ports": {
+          "in": [{ "id": "any", "name": "Any" }],
+          "out": [{ "id": "any", "name": "Any" }]
+        }
+      }
+    ],
+    "source": [
+      {
+        "id": "source",
+        "name": "Source",
+        "ports": {
+          "out": [{ "id": "any", "name": "any" }]
+        }
+      }
+    ],
+    "sink": [
+      {
+        "id": "sink",
+        "name": "Sink",
+        "ports": {
+          "in": [{ "id": "any", "name": "any" }]
+        }
+      }
+    ]
+  },
+
+  "policies": {
+    "port": {
+      "canAdd": true,
+      "canEdit": true
+    },
+    "node": {
+      "canEditName": true,
+      "canEditPorts": true
+    },
+    "validation": {
+      "mode": "warn",
+      "canChangeLevel": true
+    }
+  }
+}
